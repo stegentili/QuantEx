@@ -59,6 +59,50 @@
     background: linear-gradient(180deg, rgba(59,110,246,0.1), rgba(59,110,246,0.03));
   }
 
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    #top {
+      grid-template-columns: 1fr !important;
+      padding: 52px 20px 36px !important;
+      gap: 40px !important;
+    }
+    .qx-pillars {
+      grid-template-columns: 1fr !important;
+    }
+    #qday {
+      padding: 40px 20px 28px !important;
+    }
+    .qx-threat-grid {
+      grid-template-columns: 1fr !important;
+    }
+    #top h1 {
+      font-size: 38px !important;
+      line-height: 1.08 !important;
+      letter-spacing: -0.025em !important;
+    }
+    #qday h2 {
+      font-size: 28px !important;
+      line-height: 1.1 !important;
+    }
+    #qday > div:first-child > p {
+      font-size: 15px !important;
+    }
+    .qx-cta {
+      font-size: 28px !important;
+      line-height: 1.2 !important;
+    }
+    footer {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 36px 20px 40px !important;
+      gap: 16px !important;
+    }
+    footer > div:last-child {
+      flex-wrap: wrap !important;
+      gap: 16px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -81,13 +125,13 @@
       <!-- left -->
       <div>
         <div style="margin-bottom:36px; animation:qxUp .6s ease both;">
-          <span style="font-family:var(--qx-display); font-size:44px; font-weight:700; letter-spacing:-0.03em; color:#fff;">Quant<span class="qx-gradient-text">Ex</span></span>
+          <span style="font-family:var(--qx-display); font-size:64px; font-weight:700; letter-spacing:-0.03em; color:#fff;">Quant<span class="qx-gradient-text">Ex</span></span>
         </div>
         <h1 style="font-family:var(--qx-display); margin:0; font-size:56px; line-height:1.02; font-weight:600; letter-spacing:-0.035em; animation:qxUp .8s ease both;">The <span style="white-space:nowrap; background:linear-gradient(90deg, #D4E8FF 0%, #8BBCFF 25%, #5B8FFF 50%, #8BBCFF 75%, #D4E8FF 100%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:qxSeamless 14s linear infinite;">Quantum-Safe</span><br>Decentralized<br>Exchange</h1>
         <p style="margin:28px 0 0; font-size:19px; line-height:1.6; color:#9AA6BE; max-width:500px; font-weight:400; animation:qxUp .9s ease both;">The first truly decentralized exchange built on cutting edge quantum-resistant zero-knowledge cryptography.</p>
 
         <!-- Mini pillar cards -->
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:28px; animation:qxUp 1s ease both;">
+        <div class="qx-pillars" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:28px; animation:qxUp 1s ease both;">
           <div class="qx-pillar-mini">
             <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><ellipse cx="12" cy="12" rx="10" ry="4.4"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/></svg>
@@ -204,7 +248,7 @@
       </div></div>
 
     <!-- Q-DAY URGENCY -->
-    <section style="max-width:1180px; margin:0 auto; padding:54px 36px 30px;">
+    <section id="qday" style="max-width:1180px; margin:0 auto; padding:54px 36px 30px;">
       <div style="text-align:center; margin-bottom:48px;">
         <div style="display:inline-flex; align-items:center; gap:7px; padding:5px 14px; border-radius:100px; border:1px solid rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); margin-bottom:20px;">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -214,7 +258,7 @@
         <p style="margin:16px auto 0; font-size:18px; color:#9AA6BE; max-width:620px; line-height:1.55;">Whoever builds a Cryptographically Relevant Quantum Processor (CRQP*) first gains the power to completely break every classical exchange.<br> Here's what that means for anyone trading there.<br></p>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+      <div class="qx-threat-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
 
         <div style="position:relative; padding:16px 20px; border-radius:14px; border:1px solid rgba(239,68,68,0.18); background:linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); overflow:hidden;">
           <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(239,68,68,0.45), transparent);"></div>
@@ -255,7 +299,7 @@
       </div>
 
       <div style="text-align:center; margin-top:36px;">
-        <p style="margin:0 auto; font-family:var(--qx-display); font-size:44px; font-weight:700; color:#fff; max-width:700px; line-height:1.06; letter-spacing:-0.03em;">Choose Safety. Choose Quant<span class="qx-gradient-text">Ex</span>.</p>
+        <p class="qx-cta" style="margin:0 auto; font-family:var(--qx-display); font-size:44px; font-weight:700; color:#fff; max-width:700px; line-height:1.06; letter-spacing:-0.03em;">Choose Safety. Choose Quant<span class="qx-gradient-text">Ex</span>.</p>
         <p style="margin:10px auto 0; font-size:12px; color:#6B7790;">* Cryptographically Relevant Quantum Processor</p>
       </div>
     </section>
