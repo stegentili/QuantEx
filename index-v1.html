@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantex - The Quantum-Safe Decentralized Exchange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Archivo:wght@500;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Stack+Sans+Headline&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --qx-display: 'Archivo', sans-serif;
+    --qx-logo: 'Stack Sans Headline', 'Archivo', sans-serif;
+    --qx-body: 'Inter Tight', sans-serif;
+    --qx-mono: 'JetBrains Mono', monospace;
+    --qx-accent: #3B6EF6;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #06090F; font-family: var(--qx-body); color: #EAEEF7; }
+  ::selection { background: #3B6EF6; color: #fff; }
+  input::placeholder { color: rgba(255,255,255,0.34); }
+  a { text-decoration: none; }
+
+  @keyframes qxFloat  { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,26px) scale(1.06); } }
+  @keyframes qxFloat2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(34px,-22px) scale(1.1); } }
+  @keyframes qxAurora { 0% { opacity:.7; } 50% { opacity:1; } 100% { opacity:.7; } }
+  @keyframes qxPulse  { 0%,100% { opacity:.45; transform:scale(1); } 50% { opacity:1; transform:scale(1.25); } }
+  @keyframes qxUp     { from { opacity:0; transform: translateY(22px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes qxGrid   { from { background-position: 0 0; } to { background-position: 0 60px; } }
+
+  /* Seamless gradient — palindrome colors + linear position sweep eliminates the seam */
+  @keyframes qxSeamless {
+    from { background-position: 0% center; }
+    to   { background-position: -200% center; }
+  }
+  @keyframes qxShimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+  .qx-gradient-text {
+    background: linear-gradient(100deg, #EAF1FF 0%, #7AA8FF 35%, #3B6EF6 55%, #7AA8FF 75%, #EAF1FF 100%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: qxShimmer 3s linear infinite;
+  }
+
+  .qx-pillar-mini {
+    position: relative;
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    transition: border-color .2s, background .2s;
+    cursor: default;
+  }
+  .qx-pillar-mini:hover {
+    border-color: rgba(59,110,246,0.4);
+    background: linear-gradient(180deg, rgba(59,110,246,0.1), rgba(59,110,246,0.03));
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    #top {
+      grid-template-columns: 1fr !important;
+      padding: 52px 20px 36px !important;
+      gap: 40px !important;
+    }
+    .qx-pillars {
+      grid-template-columns: 1fr !important;
+    }
+    #qday {
+      padding: 40px 20px 28px !important;
+    }
+    .qx-threat-grid {
+      grid-template-columns: 1fr !important;
+    }
+    #top h1 {
+      font-size: 38px !important;
+      line-height: 1.08 !important;
+      letter-spacing: -0.025em !important;
+    }
+    #qday h2 {
+      font-size: 28px !important;
+      line-height: 1.1 !important;
+    }
+    #qday > div:first-child > p {
+      font-size: 15px !important;
+    }
+    .qx-cta {
+      font-size: 28px !important;
+      line-height: 1.2 !important;
+    }
+    footer {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 36px 20px 40px !important;
+      gap: 16px !important;
+    }
+    footer > div:last-child {
+      flex-wrap: wrap !important;
+      gap: 16px !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div style="position:relative; width:100%; min-height:100vh; overflow-x:hidden;">
+
+  <!-- FIXED ATMOSPHERE -->
+  <div style="position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;">
+    <div style="position:absolute; inset:0; background:radial-gradient(1100px 760px at 78% -8%, rgba(30,69,194,0.34), transparent 60%), radial-gradient(900px 700px at 8% 18%, rgba(14,32,104,0.46), transparent 62%), radial-gradient(1000px 900px at 50% 116%, rgba(34,82,210,0.26), transparent 60%); animation:qxAurora 12s ease-in-out infinite;"></div>
+    <div style="position:absolute; inset:0; opacity:0.5; background-image:linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); background-size:60px 60px; animation:qxGrid 9s linear infinite; -webkit-mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%); mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);"></div>
+    <div style="position:absolute; top:-260px; right:-160px; width:760px; height:760px; border-radius:50%; background:radial-gradient(circle, var(--qx-accent) 0%, transparent 62%); opacity:0.22; filter:blur(20px); animation:qxFloat 16s ease-in-out infinite;"></div>
+    <div style="position:absolute; bottom:-320px; left:-180px; width:680px; height:680px; border-radius:50%; background:radial-gradient(circle, #1E45C2 0%, transparent 64%); opacity:0.26; filter:blur(20px); animation:qxFloat2 19s ease-in-out infinite;"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div style="position:relative; z-index:1;">
+
+    <!-- HERO -->
+    <section id="top" style="max-width:1180px; margin:0 auto; padding:96px 36px 60px; display:grid; grid-template-columns:1.12fr 0.88fr; gap:56px; align-items:center;">
+      <!-- left -->
+      <div>
+        <div style="margin-bottom:36px; animation:qxUp .6s ease both;">
+          <span style="font-family:var(--qx-logo); font-size:64px; font-weight:400; letter-spacing:-0.03em; color:#fff;">Quant<span class="qx-gradient-text">ex</span></span>
+        </div>
+        <h1 style="font-family:var(--qx-display); margin:0; font-size:56px; line-height:1.02; font-weight:600; letter-spacing:-0.035em; animation:qxUp .8s ease both;">The <span style="white-space:nowrap; background:linear-gradient(90deg, #D4E8FF 0%, #8BBCFF 25%, #5B8FFF 50%, #8BBCFF 75%, #D4E8FF 100%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:qxSeamless 14s linear infinite;">Quantum-Safe</span><br>Decentralized<br>Exchange</h1>
+        <p style="margin:28px 0 0; font-size:19px; line-height:1.6; color:#9AA6BE; max-width:500px; font-weight:400; animation:qxUp .9s ease both;">The first truly decentralized exchange built on cutting edge quantum-resistant zero-knowledge cryptography.</p>
+
+        <!-- Mini pillar cards -->
+        <div class="qx-pillars" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:28px; animation:qxUp 1s ease both;">
+          <div class="qx-pillar-mini">
+            <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><ellipse cx="12" cy="12" rx="10" ry="4.4"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/></svg>
+            </div>
+            <div style="font-family:var(--qx-display); font-size:13px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Quantum-resistant</div>
+            <div style="font-size:11px; color:#7E8AA3; margin-top:4px; line-height:1.4;">Unbreakable by quantum computers. Built on our own zkSTARK engine.</div>
+          </div>
+          <div class="qx-pillar-mini">
+            <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="5.5" y2="17"/><line x1="12" y1="7" x2="18.5" y2="17"/><line x1="7" y1="19" x2="17" y2="19"/></svg>
+            </div>
+            <div style="font-family:var(--qx-display); font-size:13px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Truly Decentralized</div>
+            <div style="font-size:11px; color:#7E8AA3; margin-top:4px; line-height:1.4;">Built for scale from the protocol layer up through zkSTARK recursive proving.</div>
+          </div>
+          <div class="qx-pillar-mini">
+            <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </div>
+            <div style="font-family:var(--qx-display); font-size:13px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Privacy-First Dark-Pool</div>
+            <div style="font-size:11px; color:#7E8AA3; margin-top:4px; line-height:1.4;">Size, direction and identity stay hidden. Only price is public.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: glass form -->
+      <div id="join" style="scroll-margin-top:96px; animation:qxUp 1s ease both;">
+        <div style="position:relative; border-radius:24px; padding:36px 36px 30px; background:linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)); border:1px solid rgba(255,255,255,0.1); box-shadow:0 40px 90px rgba(0,0,0,0.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); overflow:hidden;">
+          <div style="position:absolute; top:-1px; left:24px; right:24px; height:1px; background:linear-gradient(90deg, transparent, var(--qx-accent), transparent); opacity:0.8;"></div>
+
+          <!-- FORM STATE -->
+          <div id="form-panel">
+            <div style="margin-bottom:22px; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.07);">
+              <h3 style="font-family:var(--qx-display); margin:0; font-size:26px; font-weight:700; letter-spacing:-0.02em; color:#fff;">Get early <span class="qx-gradient-text">access</span></h3>
+            </div>
+
+            <input id="email-input" type="email" placeholder="you@fund.com" style="width:100%; font-family:inherit; font-size:15px; color:#fff; padding:13px 16px; border-radius:12px; border:1.5px solid rgba(255,255,255,0.16); background:rgba(0,0,0,0.28); outline:none; transition:border-color .2s;" />
+
+            <div id="error-msg" style="display:none; margin-top:8px; font-size:13px; color:#FF8A8A; font-weight:500;"></div>
+
+            <!-- SURVEY -->
+            <div id="survey-panel" style="margin-top:18px; display:flex; flex-direction:column; gap:14px;"></div>
+
+            <!-- AIRDROP OPTION -->
+            <div style="margin-top:18px;">
+              <div id="airdrop-toggle" style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:12px; border:1.5px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); cursor:pointer; transition:border-color .2s, background .2s; user-select:none;">
+                <div id="airdrop-box" style="width:20px; height:20px; border-radius:6px; border:2px solid rgba(255,255,255,0.22); background:transparent; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background .2s, border-color .2s;">
+                  <svg id="airdrop-check-svg" viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0; transition:opacity .15s;"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg>
+                </div>
+                <input type="checkbox" id="airdrop-check" style="position:absolute; opacity:0; pointer-events:none; width:0; height:0;" />
+                <div style="flex:1;">
+                  <div style="font-size:13px; font-weight:600; color:#EAEEF7;">I would like to sign up for the Quantex airdrop</div>
+                  <div style="font-size:11px; color:#6B7790; margin-top:2px;">Register your wallet to be included in the drop</div>
+                </div>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#3B6EF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; opacity:0.7;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="17" cy="14" r="1" fill="#3B6EF6" stroke="none"/></svg>
+              </div>
+              <div id="wallet-row" style="overflow:hidden; max-height:0; opacity:0; transition:max-height .35s ease, opacity .3s ease;">
+                <input id="wallet-input" type="text" placeholder="Enter your Ethereum wallet address" style="width:100%; margin-top:8px; font-family:var(--qx-mono); font-size:13px; color:#fff; padding:11px 14px; border-radius:10px; border:1.5px solid rgba(59,110,246,0.3); background:rgba(0,0,0,0.28); outline:none; transition:border-color .2s;" />
+              </div>
+              <div id="wallet-error" style="display:none; margin-top:8px; font-size:13px; color:#FF8A8A; font-weight:500;"></div>
+            </div>
+
+            <button id="submit-btn" type="button" style="margin-top:20px; width:100%; font-family:var(--qx-display); font-size:16px; font-weight:600; color:#fff; background:linear-gradient(135deg, var(--qx-accent), #15287A); border:none; padding:15px; border-radius:12px; cursor:pointer; box-shadow:0 16px 36px rgba(30,69,194,0.45); display:flex; align-items:center; justify-content:center; gap:10px;">
+              Request early access
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+
+            <div style="margin-top:14px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; color:#7E8AA3; font-weight:500;">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#7E8AA3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              No spam. One email when access opens.
+            </div>
+          </div>
+
+          <!-- SUCCESS STATE -->
+          <div id="success-panel" style="display:none; padding:18px 4px 12px; text-align:center;">
+            <div style="width:76px; height:76px; margin:0 auto; border-radius:50%; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; box-shadow:0 18px 44px rgba(30,69,194,0.5);">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h3 style="font-family:var(--qx-display); margin:22px 0 0; font-size:30px; font-weight:600; letter-spacing:-0.02em; color:#fff;">You're on the list</h3>
+            <p style="margin:12px auto 0; font-size:16px; line-height:1.5; color:#9AA6BE; max-width:340px;">We'll reach <span id="success-email" style="color:#fff; font-weight:600;"></span> the moment Quantex opens.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILLARS-REMOVED --><div style="display:none;"><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:46px;">
+
+        <div style="position:relative; border-radius:22px; padding:34px 32px; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); overflow:hidden; transition:border-color .2s, background .2s;" onmouseover="this.style.borderColor='rgba(59,110,246,0.35)';this.style.background='linear-gradient(180deg,rgba(59,110,246,0.08),rgba(59,110,246,0.02))'" onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.background='linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))'">
+          <div style="position:absolute; top:-80px; right:-80px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, var(--qx-accent), transparent 70%); opacity:0.18;"></div>
+          <div style="width:54px; height:54px; border-radius:14px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(30,69,194,0.4);">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><ellipse cx="12" cy="12" rx="10" ry="4.4"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/></svg>
+          </div>
+          <h3 style="font-family:var(--qx-display); margin:22px 0 0; font-size:23px; font-weight:600; letter-spacing:-0.015em; color:#fff;">Quantum-resistant core</h3>
+          <p style="margin:12px 0 0; font-size:16px; line-height:1.55; color:#9AA6BE;">Built on our open-source zkSTARK engine, Starkom. When quantum computers break elliptic-curve crypto, Quantex keeps running. <br>HyperLiquid, Binance, dYdX won't.<br></p>
+        </div>
+
+        <div style="position:relative; border-radius:22px; padding:34px 32px; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); overflow:hidden; transition:border-color .2s, background .2s;" onmouseover="this.style.borderColor='rgba(59,110,246,0.35)';this.style.background='linear-gradient(180deg,rgba(59,110,246,0.08),rgba(59,110,246,0.02))'" onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.background='linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))'">
+          <div style="position:absolute; top:-80px; right:-80px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, var(--qx-accent), transparent 70%); opacity:0.18;"></div>
+          <div style="width:54px; height:54px; border-radius:14px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(30,69,194,0.4);">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="5.5" y2="17"/><line x1="12" y1="7" x2="18.5" y2="17"/><line x1="7" y1="19" x2="17" y2="19"/></svg>
+          </div>
+          <h3 style="font-family:var(--qx-display); margin:22px 0 0; font-size:23px; font-weight:600; letter-spacing:-0.015em; color:#fff;">Truly Decentralized</h3>
+          <p style="margin:12px 0 0; font-size:16px; line-height:1.55; color:#9AA6BE;">Quantex is built for true decentralization & high scalability from the protocol layer up through zkSTARK recursive block proving.</p>
+        </div>
+
+        <div style="position:relative; border-radius:22px; padding:34px 32px; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); overflow:hidden; transition:border-color .2s, background .2s;" onmouseover="this.style.borderColor='rgba(59,110,246,0.35)';this.style.background='linear-gradient(180deg,rgba(59,110,246,0.08),rgba(59,110,246,0.02))'" onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.background='linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))'">
+          <div style="position:absolute; top:-80px; right:-80px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, var(--qx-accent), transparent 70%); opacity:0.18;"></div>
+          <div style="width:54px; height:54px; border-radius:14px; background:linear-gradient(135deg, var(--qx-accent), #15287A); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(30,69,194,0.4);">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          </div>
+          <h3 style="font-family:var(--qx-display); margin:22px 0 0; font-size:23px; font-weight:600; letter-spacing:-0.015em; color:#fff;">Privacy-First Dark-Pool</h3>
+          <p style="margin:12px 0 0; font-size:16px; line-height:1.55; color:#9AA6BE;">Only price is public. Direction, size and issuer stay hidden behind a commitment. A zkSTARK proof settles the trade — no front-running, no information leakage.</p>
+        </div>
+
+      </div></div>
+
+    <!-- Q-DAY URGENCY -->
+    <section id="qday" style="max-width:1180px; margin:0 auto; padding:54px 36px 30px;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div style="display:inline-flex; align-items:center; gap:7px; padding:5px 14px; border-radius:100px; border:1px solid rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); margin-bottom:20px;">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-family:var(--qx-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#EF4444;">Threat Assessment</span>
+        </div>
+        <h2 style="font-family:var(--qx-display); margin:0; font-size:44px; font-weight:600; letter-spacing:-0.03em; color:#fff; line-height:1.06;">What happens when Q day arrives?</h2>
+        <p style="margin:16px auto 0; font-size:18px; color:#9AA6BE; max-width:620px; line-height:1.55;">Whoever builds a Cryptographically Relevant Quantum Processor (CRQP*) first gains the power to completely break every classical exchange.<br> Here's what that means for anyone trading there.<br></p>
+      </div>
+
+      <div class="qx-threat-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+
+        <div style="position:relative; padding:16px 20px; border-radius:14px; border:1px solid rgba(239,68,68,0.18); background:linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(239,68,68,0.45), transparent);"></div>
+          <div style="width:42px; height:42px; border-radius:10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4 4 4M17 8v12m0 0 4-4m-4 4-4-4"/></svg>
+          </div>
+          <div style="font-family:var(--qx-display); font-size:15px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Your wallet drained without warning</div>
+          <p style="margin:8px 0 0; font-size:14px; color:#9AA6BE; line-height:1.5;">Funds moved from any wallet without consent or authorization — silently, at any time.</p>
+        </div>
+
+        <div style="position:relative; padding:16px 20px; border-radius:14px; border:1px solid rgba(239,68,68,0.18); background:linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(239,68,68,0.45), transparent);"></div>
+          <div style="width:42px; height:42px; border-radius:10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <div style="font-family:var(--qx-display); font-size:15px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Trades forged in your name</div>
+          <p style="margin:8px 0 0; font-size:14px; color:#9AA6BE; line-height:1.5;">New orders placed using your account and funds by anyone with a quantum computer, perfectly impersonating you.</p>
+        </div>
+
+        <div style="position:relative; padding:16px 20px; border-radius:14px; border:1px solid rgba(239,68,68,0.18); background:linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(239,68,68,0.45), transparent);"></div>
+          <div style="width:42px; height:42px; border-radius:10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div style="font-family:var(--qx-display); font-size:15px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Your limit orders exploited at will</div>
+          <p style="margin:8px 0 0; font-size:14px; color:#9AA6BE; line-height:1.5;">Anyone with quantum power can execute against your open positions, draining your account using stolen authority.</p>
+        </div>
+
+        <div style="position:relative; padding:16px 20px; border-radius:14px; border:1px solid rgba(239,68,68,0.18); background:linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(239,68,68,0.45), transparent);"></div>
+          <div style="width:42px; height:42px; border-radius:10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </div>
+          <div style="font-family:var(--qx-display); font-size:15px; font-weight:600; color:#fff; letter-spacing:-0.01em;">Your orders erased from the book</div>
+          <p style="margin:8px 0 0; font-size:14px; color:#9AA6BE; line-height:1.5;">Any open order on any account wiped instantly — your strategies disrupted, entire markets manipulated.</p>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:36px;">
+        <p class="qx-cta" style="margin:0 auto; font-family:var(--qx-logo); font-size:44px; font-weight:400; color:#fff; max-width:700px; line-height:1.06; letter-spacing:-0.03em;">Choose Safety. <br>Choose Quant<span class="qx-gradient-text">ex.</span><br></p>
+        <p style="margin:10px auto 0; font-size:12px; color:#6B7790;">* Cryptographically Relevant Quantum Processor</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="max-width:1180px; margin:40px auto 0; padding:60px 36px 56px; display:flex; align-items:center; justify-content:space-between; gap:24px; border-top:1px solid rgba(255,255,255,0.06); flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--qx-logo); font-size:18px; font-weight:400; letter-spacing:-0.01em; color:#fff;">Quant<span class="qx-gradient-text">ex</span></span>
+        <span style="font-size:13px; color:#6B7790; margin-left:4px;">© 2026</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:28px; font-size:14px; color:#9AA6BE; font-weight:500;">
+        <a href="#how" style="color:#9AA6BE;">How it works</a>
+        <a href="https://github.com/libernet-xyz" style="color:#9AA6BE;">GitHub</a>
+        <a href="#join" style="color:#EAEEF7;">Early access →</a>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _supabase = supabase.createClient(
+  'https://huoukhwtckahbrqkdvjw.supabase.co',
+  'sb_publishable_6bG7RQr2Lr2STvmwhokfDQ_veCElBec'
+);
+
+(function () {
+  const ACCENT = '#3B6EF6';
+
+  const questions = [
+    { id: 'role',   multi: true,  label: 'What kind of trader are you?', hint: '  ·  select all that apply', options: ['Active trader', 'Fund / desk', 'Market maker', 'Builder'] },
+    { id: 'volume', multi: false, label: 'Typical monthly volume?',       hint: '',                           options: ['< $10k', '$10k – $100k', '$100k – $1M', '$1M+'] },
+    { id: 'venue',  multi: true,  label: 'Where do you trade today?',     hint: '  ·  select all that apply', options: ['HyperLiquid', 'CEX (Binance, OKX…)', 'Uniswap / AMM DEX', 'dYdX', 'Other'] },
+    { id: 'care',   multi: true,  label: 'What matters most to you?',     hint: '  ·  select all that apply', options: ['Quantum safety', 'True decentralization', 'Privacy', 'Low fees', 'Deep liquidity'] },
+  ];
+
+  const answers = {};
+
+  function chipStyle(selected) {
+    return selected
+      ? `font-family:inherit; cursor:pointer; font-size:12px; font-weight:600; color:#fff; background:linear-gradient(135deg,${ACCENT},#15287A); border:1px solid ${ACCENT}; padding:6px 12px; border-radius:100px; box-shadow:0 6px 16px rgba(30,69,194,0.38);`
+      : `font-family:inherit; cursor:pointer; font-size:12px; font-weight:500; color:#C3D0EC; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.14); padding:6px 12px; border-radius:100px;`;
+  }
+
+  function renderSurvey() {
+    const panel = document.getElementById('survey-panel');
+    panel.innerHTML = '';
+    questions.forEach(q => {
+      const qDiv = document.createElement('div');
+
+      const labelEl = document.createElement('div');
+      labelEl.style.cssText = 'font-size:12px; font-weight:600; color:#C3D0EC; margin-bottom:8px;';
+      labelEl.innerHTML = q.label + (q.hint ? `<span style="font-weight:400;color:#7E8AA3;">${q.hint}</span>` : '');
+      qDiv.appendChild(labelEl);
+
+      const optRow = document.createElement('div');
+      optRow.style.cssText = 'display:flex; flex-wrap:wrap; gap:6px;';
+
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = opt;
+
+        const isSelected = () => q.multi
+          ? Array.isArray(answers[q.id]) && answers[q.id].includes(opt)
+          : answers[q.id] === opt;
+
+        btn.style.cssText = chipStyle(isSelected());
+
+        btn.addEventListener('click', () => {
+          if (q.multi) {
+            const cur = Array.isArray(answers[q.id]) ? answers[q.id] : [];
+            answers[q.id] = cur.includes(opt) ? cur.filter(x => x !== opt) : [...cur, opt];
+          } else {
+            answers[q.id] = opt;
+          }
+          renderSurvey();
+        });
+
+        optRow.appendChild(btn);
+      });
+
+      qDiv.appendChild(optRow);
+      panel.appendChild(qDiv);
+    });
+  }
+
+  // Airdrop custom toggle
+  const airdropCheck = document.getElementById('airdrop-check');
+  const walletRow = document.getElementById('wallet-row');
+  const walletInput = document.getElementById('wallet-input');
+  let airdropOn = false;
+
+  document.getElementById('airdrop-toggle').addEventListener('click', () => {
+    airdropOn = !airdropOn;
+    airdropCheck.checked = airdropOn;
+
+    const box = document.getElementById('airdrop-box');
+    const icon = document.getElementById('airdrop-check-svg');
+    const toggle = document.getElementById('airdrop-toggle');
+
+    if (airdropOn) {
+      box.style.background = '#3B6EF6';
+      box.style.borderColor = '#3B6EF6';
+      icon.style.opacity = '1';
+      toggle.style.borderColor = 'rgba(59,110,246,0.45)';
+      toggle.style.background = 'rgba(59,110,246,0.09)';
+      walletRow.style.maxHeight = '60px';
+      walletRow.style.opacity = '1';
+    } else {
+      box.style.background = 'transparent';
+      box.style.borderColor = 'rgba(255,255,255,0.22)';
+      icon.style.opacity = '0';
+      toggle.style.borderColor = 'rgba(255,255,255,0.1)';
+      toggle.style.background = 'rgba(255,255,255,0.03)';
+      walletRow.style.maxHeight = '0';
+      walletRow.style.opacity = '0';
+      walletInput.value = '';
+      document.getElementById('wallet-error').style.display = 'none';
+    }
+  });
+
+  walletInput.addEventListener('input', () => {
+    const val = walletInput.value.trim();
+    document.getElementById('wallet-error').style.display = 'none';
+    if (val.length === 0) {
+      walletInput.style.borderColor = 'rgba(59,110,246,0.3)';
+    } else if (validateWallet(val)) {
+      walletInput.style.borderColor = '#22C55E';
+    } else {
+      walletInput.style.borderColor = val.length > 2 ? 'rgba(239,68,68,0.6)' : 'rgba(59,110,246,0.3)';
+    }
+  });
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validateWallet(addr) {
+    return /^0x[0-9a-fA-F]{40}$/.test(addr.trim());
+  }
+
+  function setError(msg) {
+    const el = document.getElementById('error-msg');
+    const input = document.getElementById('email-input');
+    if (msg) {
+      el.textContent = msg;
+      el.style.display = 'block';
+      input.style.borderColor = '#FF6B6B';
+    } else {
+      el.style.display = 'none';
+      input.style.borderColor = 'rgba(255,255,255,0.16)';
+    }
+  }
+
+  document.getElementById('email-input').addEventListener('input', () => setError(''));
+  document.getElementById('email-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submit();
+  });
+
+  async function submit() {
+    const email = document.getElementById('email-input').value.trim();
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (airdropCheck.checked) {
+      const wallet = walletInput.value.trim();
+      if (!wallet) {
+        const we = document.getElementById('wallet-error');
+        we.textContent = 'Please enter your Ethereum wallet address to sign up for the airdrop.';
+        we.style.display = 'block';
+        walletInput.style.borderColor = '#FF6B6B';
+        return;
+      }
+      if (!validateWallet(wallet)) {
+        const we = document.getElementById('wallet-error');
+        we.textContent = 'Please enter a valid Ethereum address (0x…).';
+        we.style.display = 'block';
+        walletInput.style.borderColor = '#FF6B6B';
+        return;
+      }
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    const { error } = await _supabase.from('QuantEx waitlist').insert({
+      email,
+      role:           Array.isArray(answers.role)  ? answers.role.join(', ')  : (answers.role  || null),
+      volume:         answers.volume || null,
+      venue:          Array.isArray(answers.venue) ? answers.venue.join(', ') : (answers.venue || null),
+      care:           Array.isArray(answers.care)  ? answers.care.join(', ')  : (answers.care  || null),
+      wants_airdrop:  airdropCheck.checked,
+      wallet_address: airdropCheck.checked ? walletInput.value.trim() : null,
+    });
+
+    btn.disabled = false;
+    btn.style.opacity = '1';
+
+    if (error) {
+      setError('Something went wrong. Please try again.');
+      console.error(error);
+      return;
+    }
+
+    document.getElementById('form-panel').style.display = 'none';
+    document.getElementById('success-panel').style.display = 'block';
+    document.getElementById('success-email').textContent = email;
+  }
+
+  document.getElementById('submit-btn').addEventListener('click', submit);
+
+  renderSurvey();
+})();
+</script>
+
+<script>
+(async () => {
+  await document.fonts.load('400 64px "Stack Sans Headline"');
+  const sz = 64, c = document.createElement('canvas');
+  c.width = c.height = sz;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#06090F';
+  ctx.fillRect(0, 0, sz, sz);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `400 48px "Stack Sans Headline"`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Q', sz / 2, sz / 2);
+  const link = document.createElement('link');
+  link.rel = 'icon'; link.type = 'image/png';
+  link.href = c.toDataURL('image/png');
+  document.head.appendChild(link);
+})();
+</script>
+
+</body>
+</html>

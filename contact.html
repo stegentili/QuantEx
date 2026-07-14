@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantex | Get in touch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;700&family=Inter:wght@300;400;500&family=Stack+Sans+Headline&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --qx-logo: 'Stack Sans Headline', 'Inter', sans-serif;
+    }
+
+    /* Mini blob card */
+    .mini-card {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 36px;
+      text-decoration: none;
+    }
+
+    .mini-blobs {
+      position: absolute;
+      inset: -25%;
+      z-index: 0;
+    }
+
+    .mblob {
+      position: absolute;
+      filter: blur(38px);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      will-change: transform, border-radius;
+    }
+
+    .mblob-1 {
+      width: 55%; height: 55%;
+      background: radial-gradient(circle, #1E45C2 0%, #0B1740 60%, transparent 100%);
+      top: 20%; left: 10%;
+    }
+    .mblob-2 {
+      width: 60%; height: 60%;
+      background: radial-gradient(circle, #3B6EF6 0%, #15287A 55%, transparent 100%);
+      top: 10%; right: 10%;
+    }
+    .mblob-3 {
+      width: 50%; height: 50%;
+      background: radial-gradient(circle, #7AA8FF 0%, #1E3A8A 55%, transparent 100%);
+      bottom: 15%; right: 15%;
+    }
+    .mblob-4 {
+      width: 48%; height: 48%;
+      background: radial-gradient(circle, #8BBCFF 0%, #2451D6 55%, transparent 100%);
+      top: 45%; left: 20%;
+    }
+    .mblob-5 {
+      width: 45%; height: 45%;
+      background: radial-gradient(circle, #5B8FFF 0%, #12205E 55%, transparent 100%);
+      bottom: 20%; left: 5%;
+    }
+
+    .mini-glass {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      backdrop-filter: blur(8px) saturate(1.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.4);
+      background: rgba(4, 8, 16, 0.2);
+    }
+
+    .mini-logo-text {
+      position: relative;
+      z-index: 2;
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+      color: #fff;
+      user-select: none;
+    }
+
+    /* ── MAIN ────────────────────────────────────────────── */
+    .container {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 20px 24px 100px;
+    }
+
+    .page-headline {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .page-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    /* ── FORM ────────────────────────────────────────────── */
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    input, textarea, select {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .phone-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .phone-wrap:focus-within { border-color: rgba(255,255,255,0.4); }
+
+    .phone-prefix-btn {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .phone-prefix-select {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .phone-prefix-label {
+      padding: 14px 10px 14px 16px;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .phone-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+
+    .phone-number {
+      flex: 1;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding-left: 12px;
+    }
+
+    select option { background: #111; }
+
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .submit-btn {
+      margin-top: 32px;
+      width: 100%;
+      padding: 16px 24px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover { background: rgba(255,255,255,0.88); }
+
+    /* ── SUCCESS ─────────────────────────────────────────── */
+    .success {
+      padding-top: 20px;
+    }
+
+    .success-title {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .success-body {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+      margin-bottom: 44px;
+    }
+
+    .success-body span {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .back-link {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: #fff; }
+
+    @media (max-width: 560px) {
+      .container { padding: 20px 20px 80px; }
+      .mini-card { height: 80px; }
+      .mini-logo-text { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="mini-card">
+      <div class="mini-blobs">
+        <div class="mblob mblob-1"></div>
+        <div class="mblob mblob-2"></div>
+        <div class="mblob mblob-3"></div>
+        <div class="mblob mblob-4"></div>
+        <div class="mblob mblob-5"></div>
+      </div>
+      <div class="mini-glass"></div>
+      <span class="mini-logo-text">Quantex</span>
+    </a>
+    <h1 class="page-headline">Get in touch.</h1>
+    <p class="page-sub">Tell us about your DEX. We onboard partners directly.</p>
+
+    <form action="#" method="POST">
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="jane@protocol.xyz" required />
+        </div>
+
+        <div class="field">
+          <label>Phone number</label>
+          <div class="phone-wrap">
+            <div class="phone-prefix-btn">
+            <select class="phone-prefix-select" name="prefix" aria-label="Country code" id="phone-prefix-sel">
+              <option value="🇺🇸 +1">🇺🇸 +1</option>
+              <option value="🇬🇧 +44">🇬🇧 +44</option>
+              <option value="🇮🇹 +39" selected>🇮🇹 +39</option>
+              <option value="🇫🇷 +33">🇫🇷 +33</option>
+              <option value="🇩🇪 +49">🇩🇪 +49</option>
+              <option value="🇪🇸 +34">🇪🇸 +34</option>
+              <option value="🇳🇱 +31">🇳🇱 +31</option>
+              <option value="🇨🇭 +41">🇨🇭 +41</option>
+              <option value="🇸🇪 +46">🇸🇪 +46</option>
+              <option value="🇳🇴 +47">🇳🇴 +47</option>
+              <option value="🇩🇰 +45">🇩🇰 +45</option>
+              <option value="🇫🇮 +358">🇫🇮 +358</option>
+              <option value="🇵🇹 +351">🇵🇹 +351</option>
+              <option value="🇧🇪 +32">🇧🇪 +32</option>
+              <option value="🇦🇹 +43">🇦🇹 +43</option>
+              <option value="🇵🇱 +48">🇵🇱 +48</option>
+              <option value="🇹🇷 +90">🇹🇷 +90</option>
+              <option value="🇮🇱 +972">🇮🇱 +972</option>
+              <option value="🇦🇪 +971">🇦🇪 +971</option>
+              <option value="🇮🇳 +91">🇮🇳 +91</option>
+              <option value="🇨🇳 +86">🇨🇳 +86</option>
+              <option value="🇯🇵 +81">🇯🇵 +81</option>
+              <option value="🇰🇷 +82">🇰🇷 +82</option>
+              <option value="🇸🇬 +65">🇸🇬 +65</option>
+              <option value="🇦🇺 +61">🇦🇺 +61</option>
+              <option value="🇧🇷 +55">🇧🇷 +55</option>
+              <option value="🇲🇽 +52">🇲🇽 +52</option>
+              <option value="🇨🇦 +1">🇨🇦 +1</option>
+              <option value="🇿🇦 +27">🇿🇦 +27</option>
+              <option value="🇪🇬 +20">🇪🇬 +20</option>
+            </select>
+            <span class="phone-prefix-label" id="phone-prefix-label">🇮🇹 +39</span>
+            </div>
+            <div class="phone-divider"></div>
+            <input class="phone-number" type="tel" name="phone" placeholder="333 123 4567" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="company">Protocol / company name</label>
+          <input type="text" id="company" name="company" placeholder="HyperLiquid, dYdX…" required />
+        </div>
+
+        <div class="field">
+          <label for="role">Role within company</label>
+          <input type="text" id="role" name="role" placeholder="CTO, Head of Protocol…" />
+        </div>
+
+        <div class="field">
+          <label for="description">Tell us about your DEX (optional)</label>
+          <textarea id="description" name="description" placeholder="What chain are you on, what's your current volume, and what would you need from Quantex?"></textarea>
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn">Send request</button>
+    </form>
+
+    <div class="success" id="success" style="display:none;">
+      <h2 class="success-title">Request received.</h2>
+      <p class="success-body">
+        Thanks, <span id="s-name"></span>. We'll review your request and reach out at <span id="s-email"></span> if there's a good fit.<br><br>
+        You can expect to hear back within 2 business days.
+      </p>
+      <a href="index.html" class="back-link">← Back to home</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    var blobs = document.querySelectorAll('.mblob');
+    var speeds = [1400, 1800, 1100, 2000, 1500];
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function ri()       { return Math.round(rand(15, 85)); }
+
+    function randomBR() {
+      return ri()+'% '+ri()+'% '+ri()+'% '+ri()+'% / '+ri()+'% '+ri()+'% '+ri()+'% '+ri()+'%';
+    }
+
+    function nextShape() {
+      var s = rand(0.7, 1.35);
+      return { sx: s, sy: s * rand(0.8, 1.2) };
+    }
+
+    function animateBlob(blob, i) {
+      var base = speeds[i] || 1500;
+
+      function step() {
+        var sh  = nextShape();
+        var tx  = rand(-35, 35);
+        var ty  = rand(-35, 35);
+        var rot = rand(-90, 90);
+        var dur = base + rand(-base * 0.15, base * 0.15);
+        blob.style.transition   = 'transform '+dur+'ms cubic-bezier(0.37,0,0.63,1), border-radius '+dur+'ms cubic-bezier(0.37,0,0.63,1)';
+        blob.style.transform    = 'translate('+tx+'%, '+ty+'%) rotate('+rot+'deg) scaleX('+sh.sx+') scaleY('+sh.sy+')';
+        blob.style.borderRadius = randomBR();
+      }
+
+      blob.addEventListener('transitionend', function(e) {
+        if (e.propertyName === 'transform') step();
+      });
+
+      blob.style.borderRadius = randomBR();
+      setTimeout(step, rand(0, 1500));
+    }
+
+    blobs.forEach(function(b, i) { animateBlob(b, i); });
+
+    var prefixSel   = document.getElementById('phone-prefix-sel');
+    var prefixLabel = document.getElementById('phone-prefix-label');
+    prefixSel.addEventListener('change', function() {
+      prefixLabel.textContent = prefixSel.value;
+      if (phoneInput.value) phoneInput.dispatchEvent(new Event('input'));
+    });
+
+    var phoneFormats = {
+      '+1':   function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 6)  return '(' + d.slice(0,3) + ') ' + d.slice(3);
+        return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10);
+      },
+      '+44':  function(d) {
+        if (d.length <= 4)  return d;
+        if (d.length <= 7)  return d.slice(0,4) + ' ' + d.slice(4);
+        return d.slice(0,4) + ' ' + d.slice(4,7) + ' ' + d.slice(7,11);
+      },
+      '+39':  function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 6)  return d.slice(0,3) + ' ' + d.slice(3);
+        return d.slice(0,3) + ' ' + d.slice(3,6) + ' ' + d.slice(6,10);
+      },
+      '+33':  function(d) {
+        var s = ''; for (var i=0;i<Math.min(d.length,10);i++) { if(i>0&&i%2===0) s+=' '; s+=d[i]; } return s;
+      },
+      '+49':  function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 7)  return d.slice(0,3) + ' ' + d.slice(3);
+        return d.slice(0,3) + ' ' + d.slice(3,7) + ' ' + d.slice(7,11);
+      },
+    };
+    var defaultFmt = function(d) {
+      var s = ''; for (var i=0;i<d.length;i++) { if(i>0&&i%3===0) s+=' '; s+=d[i]; } return s;
+    };
+
+    var phoneInput = document.querySelector('.phone-number');
+    phoneInput.addEventListener('input', function() {
+      var digits = phoneInput.value.replace(/\D/g,'');
+      var code   = (prefixSel.value.match(/\+[\d]+/) || ['+1'])[0];
+      var fmt    = phoneFormats[code] || defaultFmt;
+      var cursor = phoneInput.selectionStart;
+      var old    = phoneInput.value;
+      phoneInput.value = fmt(digits);
+      var diff = phoneInput.value.length - old.length;
+      phoneInput.setSelectionRange(cursor + diff, cursor + diff);
+    });
+
+    var _supabase = supabase.createClient(
+      'https://huoukhwtckahbrqkdvjw.supabase.co',
+      'sb_publishable_6bG7RQr2Lr2STvmwhokfDQ_veCElBec'
+    );
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name  = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var prefix = prefixSel.value;
+      var phoneDigits = document.querySelector('.phone-number').value.trim();
+      var phone = phoneDigits ? (prefix + ' ' + phoneDigits) : '';
+      var company = document.getElementById('company').value.trim();
+      var role  = document.getElementById('role').value.trim();
+      var description = document.getElementById('description').value.trim();
+
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!name || !email || !emailOk || !company) {
+        var msg = !emailOk ? 'Please enter a valid email address.' : 'Please fill in all required fields.';
+        alert(msg);
+        return;
+      }
+
+      var submitBtn = document.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      var details = 'Name: ' + name
+        + (phone ? '\nPhone: ' + phone : '')
+        + (role ? '\nRole: ' + role : '')
+        + (description ? '\nDetails: ' + description : '');
+
+      _supabase.from('QuantEx waitlist').insert({
+        email: email,
+        role: company,
+        volume: null,
+        venue: null,
+        care: details,
+        wants_airdrop: false,
+        wallet_address: null,
+      }).then(function(res) {
+        if (res.error) throw res.error;
+        document.getElementById('s-name').textContent  = name.split(' ')[0];
+        document.getElementById('s-email').textContent = email;
+        document.querySelector('form').style.display    = 'none';
+        document.querySelector('.page-headline').style.display = 'none';
+        document.querySelector('.page-sub').style.display      = 'none';
+        document.getElementById('success').style.display       = 'block';
+      }).catch(function(err) {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send request';
+        alert('Something went wrong. Please try again.');
+      });
+    });
+  </script>
+
+</body>
+</html>
