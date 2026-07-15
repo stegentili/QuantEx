@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantex - The Quantum-Safe Foundation for Every DEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,300;1,400&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Stack+Sans+Headline&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --qx-logo: 'Stack Sans Headline', 'Inter', sans-serif;
+      --qx-accent: #3B6EF6;
+      --qx-cream: #F4F2EE;
+      --qx-cream-2: #EDEAE3;
+      --qx-ink: #14140F;
+      --qx-black: #0A0A08;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--qx-cream);
+      color: var(--qx-ink);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+
+    .serif-em {
+      font-family: 'IBM Plex Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 40px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 40px; }
+
+    .nav-logo {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--qx-ink);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: rgba(20,20,15,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--qx-ink); }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 11px 22px;
+      background: var(--qx-ink);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: opacity 0.2s;
+    }
+    .btn-dark:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--qx-ink);
+      text-decoration: none;
+      padding: 11px 4px;
+    }
+
+    .nav-cta { display: none; }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ────────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 40px 40px 100px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    @keyframes dot-fade {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.25; }
+    }
+
+    .hero h1 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(2.2rem, 3.6vw, 3.1rem);
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      margin-bottom: 18px;
+      max-width: 560px;
+    }
+
+    .hero-sub {
+      font-size: 1.02rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.62);
+      line-height: 1.55;
+      max-width: 440px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 22px; }
+
+    /* ── HERO VISUAL (reuses blob card treatment) ──────── */
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1 / 1.02;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .blobs { position: absolute; inset: -25%; z-index: 0; }
+    .blob { position: absolute; filter: blur(38px); mix-blend-mode: screen; opacity: 0.9; will-change: transform, border-radius; }
+    .blob-1 { width: 55%; height: 55%; background: radial-gradient(circle, #1E45C2 0%, #0B1740 60%, transparent 100%); top: 20%; left: 10%; }
+    .blob-2 { width: 60%; height: 60%; background: radial-gradient(circle, #3B6EF6 0%, #15287A 55%, transparent 100%); top: 10%; right: 10%; }
+    .blob-3 { width: 50%; height: 50%; background: radial-gradient(circle, #7AA8FF 0%, #1E3A8A 55%, transparent 100%); bottom: 15%; right: 15%; }
+    .blob-4 { width: 48%; height: 48%; background: radial-gradient(circle, #8BBCFF 0%, #2451D6 55%, transparent 100%); top: 45%; left: 20%; }
+    .blob-5 { width: 45%; height: 45%; background: radial-gradient(circle, #5B8FFF 0%, #12205E 55%, transparent 100%); bottom: 20%; left: 5%; }
+
+    .glass { position: absolute; inset: 0; z-index: 1; backdrop-filter: blur(24px) saturate(1.5); -webkit-backdrop-filter: blur(24px) saturate(1.5); background: rgba(4,8,16,0.22); }
+
+    .hero-visual-content {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .hero-visual-mark {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(3rem, 6.5vw, 4.6rem);
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding: 24px 24px 60px; gap: 32px; }
+      .hero h1 { max-width: 100%; }
+      .hero-visual { order: -1; aspect-ratio: 4/3; }
+    }
+
+    /* ── DARK STEPS SECTION ─────────────────────────────── */
+    .steps-section {
+      background: var(--qx-black);
+      color: #fff;
+      padding: 120px 40px;
+    }
+
+    .steps-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.68fr 1fr 1.1fr;
+      gap: 40px;
+      align-items: stretch;
+    }
+
+    .steps-inner h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: space-between;
+      padding: 4px 0;
+      gap: 0;
+    }
+
+    .reveal-line {
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(5px);
+      letter-spacing: 0.14em;
+      transition: opacity 80ms linear, transform 80ms linear, filter 80ms linear, letter-spacing 80ms linear;
+      will-change: opacity, transform, filter;
+    }
+
+    .reveal-connector {
+      width: 1px;
+      flex: 1 1 auto;
+      min-height: 32px;
+      background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0));
+      margin: 10px 0;
+    }
+
+    .steps-list { display: flex; flex-direction: column; }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 24px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .step-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+    .step-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.02em;
+      padding-top: 2px;
+    }
+
+    .step-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.5;
+    }
+
+    .step-text b { font-weight: 500; color: #fff; }
+
+    .steps-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .steps-visual svg {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+    }
+
+    .shape-layer {
+      opacity: 0;
+      transform: scale(0.82);
+      transform-origin: 100px 100px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .shape-layer.visible { opacity: 1; transform: scale(1); }
+    .shape-layer.core { opacity: 0; transform: scale(0.5); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .shape-layer.core.visible { opacity: 1; transform: scale(1); }
+
+    .glass-word {
+      display: inline-block;
+      font-weight: 600;
+      background-size: 280% 280%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: glass-shift 5.5s ease-in-out infinite;
+    }
+    .glass-word.red {
+      background-image:
+        radial-gradient(circle at 24% 26%, #E2695A 0%, transparent 66%),
+        radial-gradient(circle at 78% 18%, #B23A2E 0%, transparent 62%),
+        radial-gradient(circle at 72% 78%, #8A2E22 0%, transparent 64%),
+        radial-gradient(circle at 28% 76%, #5A140D 0%, transparent 62%),
+        linear-gradient(135deg, #4A0E09, #1F0503);
+    }
+    .glass-word.blue {
+      background-image:
+        radial-gradient(circle at 24% 26%, #B7D4FF 0%, transparent 66%),
+        radial-gradient(circle at 78% 18%, #3B6EF6 0%, transparent 62%),
+        radial-gradient(circle at 72% 78%, #7AA8FF 0%, transparent 64%),
+        radial-gradient(circle at 28% 76%, #1E45C2 0%, transparent 62%),
+        linear-gradient(135deg, #14297A, #0B1740);
+    }
+
+    @keyframes glass-shift {
+      0%, 100% { background-position: 0% 30%; }
+      50%      { background-position: 100% 70%; }
+    }
+
+    @media (max-width: 860px) {
+      .steps-inner { grid-template-columns: 1fr; gap: 32px; }
+      .steps-visual { order: -1; height: 240px; }
+      .steps-visual svg { max-width: 240px; }
+    }
+
+    /* ── FEATURE CARDS SECTION ──────────────────────────── */
+    .features-section { padding: 120px 40px; }
+
+    .features-head {
+      max-width: 1240px;
+      margin: 0 auto 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .features-head h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .features-head p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.6);
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 44px rgba(20,20,15,0.09);
+      border-color: rgba(59,110,246,0.3);
+    }
+
+    .feature-card-body { padding: 26px 26px 22px; }
+
+    .feature-icon {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      display: inline-block;
+      color: rgba(20,20,15,0.45);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      color: var(--qx-accent);
+      transform: scale(1.2) rotate(-6deg);
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      letter-spacing: -0.005em;
+    }
+
+    .feature-card p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.55);
+      line-height: 1.55;
+    }
+
+    .feature-visual {
+      margin-top: auto;
+      background: var(--qx-cream-2);
+      border-top: 1px solid rgba(20,20,15,0.06);
+      padding: 20px 26px;
+      min-height: 96px;
+      display: flex;
+      align-items: center;
+    }
+
+    .fv-code {
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.08);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.72rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(20,20,15,0.7);
+    }
+    .fv-code .ok { color: #1E8E5A; font-size: 0.68rem; }
+
+    .fv-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .fv-pill {
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.1);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.7rem;
+      color: rgba(20,20,15,0.65);
+    }
+    .fv-pill.accent { background: var(--qx-accent); color: #fff; border-color: var(--qx-accent); }
+
+    .fv-audit {
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      width: 100%;
+      font-size: 0.7rem;
+    }
+    .fv-audit-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; color: rgba(20,20,15,0.65); }
+    .fv-audit-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--qx-accent); flex-shrink: 0; }
+
+    @media (max-width: 860px) {
+      .features-head { grid-template-columns: 1fr; gap: 16px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── "BRING A PROBLEM" PANEL ────────────────────────── */
+    .problem-section { padding: 0 40px 120px; }
+
+    .problem-inner {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .problem-inner h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .problem-inner p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.6);
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+
+    .problem-panel {
+      max-width: 1240px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 16/7;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6%;
+      padding: 0 6%;
+    }
+
+    .problem-msg {
+      position: relative; z-index: 2;
+      background: rgba(10,10,8,0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 18px 20px;
+      max-width: 300px;
+      width: 100%;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .problem-connector {
+      position: relative; z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .problem-connector .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+    }
+
+    .proof-card {
+      position: relative; z-index: 2;
+      background: rgba(10,10,8,0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      padding: 20px 22px;
+      max-width: 300px;
+      width: 100%;
+      color: #fff;
+    }
+
+    .proof-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .proof-card-head span:first-child { font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.85); }
+    .pr-badge { background: var(--qx-accent); color: #fff; font-size: 0.62rem; padding: 3px 9px; border-radius: 999px; }
+
+    .proof-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+    .proof-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .proof-step-check {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: rgba(59,110,246,0.18);
+      color: var(--qx-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .proof-hash {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.32);
+      letter-spacing: 0.02em;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .problem-inner { grid-template-columns: 1fr; }
+      .problem-panel { aspect-ratio: auto; flex-direction: column; gap: 18px; padding: 32px 24px; }
+      .problem-connector { flex-direction: column; }
+    }
+
+    /* ── DARK INDUSTRIES SECTION ────────────────────────── */
+    .industries-section {
+      background: var(--qx-black);
+      color: #fff;
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .stat-hero { margin-bottom: 40px; }
+
+    .stat-hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    .ticker-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #E5484D;
+      animation: dot-fade 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .stat-hero-number {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(2.8rem, 7.5vw, 5.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 50px rgba(59,110,246,0.5);
+    }
+
+    .ticker-ellipsis {
+      display: inline-flex;
+      gap: 3px;
+      align-items: flex-end;
+      margin-right: 2px;
+    }
+    .ticker-ellipsis span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #E5484D;
+      opacity: 0.2;
+      animation: dot-blink 1.4s infinite;
+    }
+    .ticker-ellipsis span:nth-child(1) { animation-delay: 0s; }
+    .ticker-ellipsis span:nth-child(2) { animation-delay: 0.2s; }
+    .ticker-ellipsis span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dot-blink {
+      0%, 80%, 100% { opacity: 0.2; }
+      40% { opacity: 1; }
+    }
+
+    .stat-hero-unit {
+      font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .stat-hero-sub {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .industries-section h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      max-width: 700px;
+      margin: 0 auto 44px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 4px;
+      width: fit-content;
+      margin: 0 auto 56px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      padding: 9px 18px;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab:hover { color: #fff; }
+    .tab.active { background: #fff; color: var(--qx-ink); }
+
+    .industry-panel {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 2.6em;
+    }
+
+    .industry-text {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+      transition: opacity 0.2s ease;
+    }
+
+    .industry-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.5);
+      transition: opacity 0.2s ease;
+    }
+
+    /* ── GRADIENT CTA BANNER (reuses blob treatment) ────── */
+    .cta-banner-section { padding: 120px 40px; }
+
+    .cta-banner {
+      max-width: 1240px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      aspect-ratio: 21/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .cta-banner-content {
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cta-banner-sub {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 26px;
+    }
+
+    .cta-banner-actions { display: flex; gap: 14px; justify-content: center; }
+
+    .btn-light {
+      display: inline-block;
+      padding: 11px 22px;
+      background: #fff;
+      color: var(--qx-ink);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 999px;
+    }
+
+    .btn-outline-light {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 700px) {
+      .cta-banner { aspect-ratio: 4/5; }
+      .cta-banner-actions { flex-direction: column; }
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .footer {
+      background: var(--qx-black);
+      color: #fff;
+      padding: 60px 40px 0;
+    }
+
+    .footer-top {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-top h3 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .footer-top-actions { display: flex; gap: 14px; }
+
+    .footer-col-title {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+
+    .footer-meta {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-badge {
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .footer-wordmark {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-size: clamp(4.5rem, 15vw, 10.5rem);
+      text-align: center;
+      padding: 24px 0 20px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 860px) {
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-meta { flex-direction: column; gap: 10px; text-align: center; }
+    }
+
+    /* ── APPLY MODAL ─────────────────────────────────────── */
+    body.modal-open { overflow: hidden; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(6,6,4,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .modal-panel {
+      background: var(--qx-black);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 40px 36px 36px;
+      position: relative;
+      transform: translateY(16px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.open .modal-panel { transform: translateY(0) scale(1); }
+
+    .modal-close {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .modal-headline {
+      font-family: 'IBM Plex Serif', serif;
+      font-weight: 500;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .modal-sub {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .modal-form { display: flex; flex-direction: column; gap: 18px; }
+
+    .m-field { display: flex; flex-direction: column; gap: 7px; }
+
+    .m-field label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .m-field input, .m-field textarea {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 9px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .m-field input::placeholder, .m-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .m-field input:focus, .m-field textarea:focus { border-color: rgba(255,255,255,0.4); }
+
+    .m-field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    .m-phone-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 9px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .m-phone-wrap:focus-within { border-color: rgba(255,255,255,0.4); }
+
+    .m-phone-prefix-btn { position: relative; flex-shrink: 0; display: flex; align-items: center; }
+    .m-phone-prefix-select { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; z-index: 2; }
+    .m-phone-prefix-label {
+      padding: 12px 8px 12px 14px;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .m-phone-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.15); flex-shrink: 0; }
+    .m-phone-number { flex: 1; background: transparent !important; border: none !important; border-radius: 0 !important; padding-left: 10px; }
+    .m-phone-prefix-select option { background: #111; }
+
+    .modal-submit {
+      margin-top: 8px;
+      width: 100%;
+      padding: 14px 22px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 9px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-submit:hover { background: rgba(255,255,255,0.88); }
+
+    .modal-success-title {
+      font-family: 'IBM Plex Serif', serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+    .modal-success-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 26px;
+    }
+    .modal-success-body span { color: rgba(255,255,255,0.85); }
+
+    .modal-back {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.85rem;
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .modal-back:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 560px) {
+      .modal-panel { padding: 32px 22px 28px; max-height: 92vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="#" class="nav-logo">Quantex</a>
+      <div class="nav-links">
+        <a href="#technology">Technology</a>
+        <a href="#industries">Industries</a>
+      </div>
+    </div>
+    <a href="#" class="btn-dark" onclick="openApplyModal(event)">Apply</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>Quantum-safe infrastructure<br />for your trading exchange.</h1>
+      <p class="hero-sub">
+        Enabled by Starkom, our proprietary, cutting-edge open-source cryptographic zkSTARK engine,
+        the Quantex L1 provides your DEX with military-grade quantum safe technology.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-dark" onclick="openApplyModal(event)">Apply</a>
+        <a href="#technology" class="btn-ghost">Build on Quantex &nbsp;&rarr;</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+      </div>
+      <div class="glass"></div>
+      <div class="hero-visual-content">
+        <div class="hero-visual-mark">Quantex</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK STEPS -->
+  <section class="steps-section" id="technology">
+    <div class="steps-inner">
+      <h2 class="reveal-lines">
+        <span class="reveal-line">Your exchange.</span>
+        <span class="reveal-connector"></span>
+        <span class="reveal-line">From <span class="glass-word red">exposed</span>.</span>
+        <span class="reveal-connector"></span>
+        <span class="reveal-line">To <span class="glass-word blue">unbreakable</span>.</span>
+      </h2>
+      <div class="steps-list">
+        <div class="step-row" data-step="1">
+          <div class="step-label">Step 1</div>
+          <div class="step-text"><b>Connect your DEX</b> to the Quantex L1 - no changes to your existing app or matching engine required.</div>
+        </div>
+        <div class="step-row" data-step="2">
+          <div class="step-label">Step 2</div>
+          <div class="step-text">Starkom <b>generates zkSTARK proofs</b> for every settlement, secured against both classical and quantum adversaries.</div>
+        </div>
+        <div class="step-row" data-step="3">
+          <div class="step-label">Step 3</div>
+          <div class="step-text"><b>Review proofs and audit trails</b> live, with your security and compliance teams in the loop from day one.</div>
+        </div>
+        <div class="step-row" data-step="4">
+          <div class="step-label">Step 4</div>
+          <div class="step-text">Run <b>independent audits</b> against an open-source, publicly verifiable proving engine - nothing is a black box.</div>
+        </div>
+        <div class="step-row" data-step="5">
+          <div class="step-label">Step 5</div>
+          <div class="step-text"><b>Go live</b> in your existing environment, with quantum-safe settlement from your very first trade.</div>
+        </div>
+      </div>
+      <div class="steps-visual">
+        <svg viewBox="0 0 240 220" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(255,255,255,0.4);">
+          <!-- Step 1: Connect (apex, top) -->
+          <g class="shape-layer" data-shape="1">
+            <path d="M90 20 L102 56 L78 56 Z" opacity="0.32"/>
+            <circle cx="90" cy="20" r="3" fill="var(--qx-accent)" stroke="none"/>
+            <circle cx="78" cy="56" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="102" cy="56" r="2.2" fill="currentColor" stroke="none"/>
+            <text x="160" y="42" font-size="11" font-family="'Inter', sans-serif" fill="currentColor" stroke="none">Connect</text>
+          </g>
+          <!-- Step 2: Prove -->
+          <g class="shape-layer" data-shape="2">
+            <path d="M78 56 L66 92"/>
+            <path d="M102 56 L114 92"/>
+            <path d="M66 92 L114 92" stroke-dasharray="2 3"/>
+            <circle cx="66" cy="92" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="114" cy="92" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="90" cy="74" r="1.6" fill="currentColor" stroke="none" opacity="0.6"/>
+            <text x="160" y="78" font-size="11" font-family="'Inter', sans-serif" fill="currentColor" stroke="none">Prove</text>
+          </g>
+          <!-- Step 3: Review -->
+          <g class="shape-layer" data-shape="3">
+            <path d="M66 92 L54 128"/>
+            <path d="M114 92 L126 128"/>
+            <path d="M54 128 L126 128" stroke-dasharray="2 3"/>
+            <circle cx="54" cy="128" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="126" cy="128" r="2.2" fill="currentColor" stroke="none"/>
+            <text x="160" y="114" font-size="11" font-family="'Inter', sans-serif" fill="currentColor" stroke="none">Review</text>
+          </g>
+          <!-- Step 4: Audit -->
+          <g class="shape-layer" data-shape="4">
+            <path d="M54 128 L42 164"/>
+            <path d="M126 128 L138 164"/>
+            <path d="M42 164 L138 164" stroke-dasharray="2 3"/>
+            <circle cx="42" cy="164" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="138" cy="164" r="2.2" fill="currentColor" stroke="none"/>
+            <circle cx="90" cy="146" r="1.6" fill="currentColor" stroke="none" opacity="0.6"/>
+            <text x="160" y="150" font-size="11" font-family="'Inter', sans-serif" fill="currentColor" stroke="none">Audit</text>
+          </g>
+          <!-- Step 5: Live (base, foundation) -->
+          <g class="shape-layer core" data-shape="5">
+            <path d="M42 164 L30 200"/>
+            <path d="M138 164 L150 200"/>
+            <path d="M30 200 L150 200" stroke-width="1.4"/>
+            <circle cx="30" cy="200" r="2.5" fill="var(--qx-accent)" stroke="none"/>
+            <circle cx="150" cy="200" r="2.5" fill="var(--qx-accent)" stroke="none"/>
+            <circle cx="90" cy="200" r="5" fill="var(--qx-accent)" stroke="none"/>
+            <text x="160" y="186" font-size="11" font-weight="600" font-family="'Inter', sans-serif" fill="currentColor" stroke="none">Live</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE CARDS -->
+  <section class="features-section">
+    <div class="features-head">
+      <h2>Your liquidity,<br />secured forever.</h2>
+      <p>
+        Everything Quantex ships is built on Starkom, our open-source zkSTARK engine -
+        auditable by anyone, verifiable on-chain, and designed to outlast the quantum
+        threat timeline.
+      </p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-card-body">
+          <div class="feature-icon">&#9679;</div>
+          <h3>Post-quantum by default</h3>
+          <p>Every trade is settled behind zkSTARK proofs with no reliance on elliptic-curve assumptions Shor's algorithm can break.</p>
+        </div>
+        <div class="feature-visual">
+          <div class="fv-code">
+            <span>settlement-proof.starkom</span>
+            <span class="ok">&#10003; verified</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-body">
+          <div class="feature-icon">&#9671;</div>
+          <h3>Open, auditable core</h3>
+          <p>Starkom is open-source. Anyone - your team, a third-party auditor, a regulator - can verify exactly how proofs are generated.</p>
+        </div>
+        <div class="feature-visual">
+          <div class="fv-pills">
+            <span class="fv-pill accent">Starkom</span>
+            <span class="fv-pill">GitHub</span>
+            <span class="fv-pill">Audit report</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-body">
+          <div class="feature-icon">&#9632;</div>
+          <h3>Your infra, your rules</h3>
+          <p>Integrate the Quantex L1 alongside your existing stack - no forced migration, and a compliance posture that fits your jurisdiction.</p>
+        </div>
+        <div class="feature-visual">
+          <div class="fv-audit">
+            <div class="fv-audit-row"><span class="fv-audit-dot"></span>Runs alongside your existing stack</div>
+            <div class="fv-audit-row"><span class="fv-audit-dot"></span>Full proof history retained</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRING A PROBLEM PANEL -->
+  <section class="problem-section">
+    <div class="problem-inner">
+      <h2>The Quantum-Safe Layer for DeFi.</h2>
+      <div>
+        <p>
+          Describe your matching engine and settlement flow. Quantex handles the zkSTARK
+          integration, the proof generation, and the deployment - inside your own
+          infrastructure.
+        </p>
+      </div>
+    </div>
+    <div class="problem-panel">
+      <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+      </div>
+      <div class="glass"></div>
+      <div class="problem-msg">
+        &ldquo;We need settlement that survives a quantum adversary, and we need it live
+        before our next audit cycle.&rdquo;
+      </div>
+      <div class="problem-connector">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-card-head">
+          <span>Starkom proof</span>
+          <span class="pr-badge">Verified</span>
+        </div>
+        <div class="proof-steps">
+          <div class="proof-step"><span class="proof-step-check">&#10003;</span>Match order</div>
+          <div class="proof-step"><span class="proof-step-check">&#10003;</span>Generate zkSTARK proof</div>
+          <div class="proof-step"><span class="proof-step-check">&#10003;</span>Settle on Quantex L1</div>
+        </div>
+        <div class="proof-hash">proof · 0x9f2a...3c7e</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK INDUSTRIES -->
+  <section class="industries-section" id="industries">
+    <div class="stat-hero">
+      <div class="stat-hero-label"><span class="ticker-dot"></span>Estimated exposed volume trading across decentralized exchanges every 24 hours.</div>
+      <div class="stat-hero-number">
+        <span class="ticker-ellipsis"><span></span><span></span><span></span></span>
+        <span id="tickerAmount">$7.415</span>
+        <span class="stat-hero-unit">billion</span>
+      </div>
+      <div class="stat-hero-sub">and rising every second</div>
+    </div>
+    <h2>Built for players that<br /> cannot afford to be hacked.</h2>
+    <div class="tabs">
+      <button type="button" class="tab active" data-industry="dexs">DEXs</button>
+      <button type="button" class="tab" data-industry="custodians">Custodians</button>
+      <button type="button" class="tab" data-industry="market-makers">Market Makers</button>
+      <button type="button" class="tab" data-industry="l2s">L2s</button>
+      <button type="button" class="tab" data-industry="institutions">Institutions</button>
+    </div>
+    <div class="industry-panel">
+      <div class="industry-icon" id="industryIcon">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="16" r="8"/><circle cx="20" cy="16" r="8"/><circle cx="16" cy="16" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <p class="industry-text" id="industryText">Settle every trade behind zkSTARK proofs that stay valid even after quantum computers arrive.</p>
+    </div>
+  </section>
+
+  <!-- GRADIENT CTA BANNER -->
+  <section class="cta-banner-section">
+    <div class="cta-banner">
+      <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+      </div>
+      <div class="glass"></div>
+      <div class="cta-banner-content">
+        <h2>Quantum resistance is just<br />a conversation away.</h2>
+        <p class="cta-banner-sub">Quantum-safe settlement, on your own infrastructure.</p>
+        <div class="cta-banner-actions">
+          <a href="#" class="btn-light" onclick="openApplyModal(event)">Apply</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div>
+        <h3>Choose safety. Choose Quantex.</h3>
+        <div class="footer-top-actions">
+          <a href="#technology" class="btn-outline-light">Build on Quantex &nbsp;&rarr;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="#technology">How it works</a>
+        <a href="#industries">Industries</a>
+        <a href="#technology">Build on Quantex</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="https://github.com/libernet-xyz">Docs</a>
+        <a href="https://github.com/libernet-xyz">GitHub</a>
+        <a href="#" onclick="openApplyModal(event)">Get in touch</a>
+      </div>
+    </div>
+    <div class="footer-wordmark">Quantex</div>
+    <div class="footer-meta">
+      <span>&#169; 2026 Quantex. Powered by Starkom.</span>
+      <span class="footer-badge">Built on Libernet</span>
+    </div>
+  </footer>
+
+  <!-- APPLY MODAL -->
+  <div class="modal-overlay" id="applyOverlay" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalHeadline">
+      <button type="button" class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+      <h2 id="modalHeadline" class="modal-headline">Get in touch.</h2>
+      <p class="modal-sub">Tell us about your DEX. We onboard partners directly.</p>
+
+      <form id="applyForm" class="modal-form">
+        <div class="m-field">
+          <label for="m-name">Full name</label>
+          <input type="text" id="m-name" name="name" placeholder="Jane Smith" required />
+        </div>
+
+        <div class="m-field">
+          <label for="m-email">Email</label>
+          <input type="email" id="m-email" name="email" placeholder="jane@protocol.xyz" required />
+        </div>
+
+        <div class="m-field">
+          <label>Phone number</label>
+          <div class="m-phone-wrap">
+            <div class="m-phone-prefix-btn">
+              <select class="m-phone-prefix-select" name="prefix" aria-label="Country code" id="m-phone-prefix-sel">
+                <option value="🇺🇸 +1">🇺🇸 +1</option>
+                <option value="🇬🇧 +44">🇬🇧 +44</option>
+                <option value="🇮🇹 +39" selected>🇮🇹 +39</option>
+                <option value="🇫🇷 +33">🇫🇷 +33</option>
+                <option value="🇩🇪 +49">🇩🇪 +49</option>
+                <option value="🇪🇸 +34">🇪🇸 +34</option>
+                <option value="🇳🇱 +31">🇳🇱 +31</option>
+                <option value="🇨🇭 +41">🇨🇭 +41</option>
+                <option value="🇸🇪 +46">🇸🇪 +46</option>
+                <option value="🇳🇴 +47">🇳🇴 +47</option>
+                <option value="🇩🇰 +45">🇩🇰 +45</option>
+                <option value="🇫🇮 +358">🇫🇮 +358</option>
+                <option value="🇵🇹 +351">🇵🇹 +351</option>
+                <option value="🇧🇪 +32">🇧🇪 +32</option>
+                <option value="🇦🇹 +43">🇦🇹 +43</option>
+                <option value="🇵🇱 +48">🇵🇱 +48</option>
+                <option value="🇹🇷 +90">🇹🇷 +90</option>
+                <option value="🇮🇱 +972">🇮🇱 +972</option>
+                <option value="🇦🇪 +971">🇦🇪 +971</option>
+                <option value="🇮🇳 +91">🇮🇳 +91</option>
+                <option value="🇨🇳 +86">🇨🇳 +86</option>
+                <option value="🇯🇵 +81">🇯🇵 +81</option>
+                <option value="🇰🇷 +82">🇰🇷 +82</option>
+                <option value="🇸🇬 +65">🇸🇬 +65</option>
+                <option value="🇦🇺 +61">🇦🇺 +61</option>
+                <option value="🇧🇷 +55">🇧🇷 +55</option>
+                <option value="🇲🇽 +52">🇲🇽 +52</option>
+                <option value="🇨🇦 +1">🇨🇦 +1</option>
+                <option value="🇿🇦 +27">🇿🇦 +27</option>
+                <option value="🇪🇬 +20">🇪🇬 +20</option>
+              </select>
+              <span class="m-phone-prefix-label" id="m-phone-prefix-label">🇮🇹 +39</span>
+            </div>
+            <div class="m-phone-divider"></div>
+            <input class="m-phone-number" type="tel" name="phone" placeholder="333 123 4567" />
+          </div>
+        </div>
+
+        <div class="m-field">
+          <label for="m-company">Protocol / company name</label>
+          <input type="text" id="m-company" name="company" placeholder="Protocol name..." required />
+        </div>
+
+        <div class="m-field">
+          <label for="m-role">Role within company</label>
+          <input type="text" id="m-role" name="role" placeholder="CTO, Head of Product..." />
+        </div>
+
+        <div class="m-field">
+          <label for="m-description">Tell us about your DEX (optional)</label>
+          <textarea id="m-description" name="description" placeholder="..."></textarea>
+        </div>
+
+        <button type="submit" class="modal-submit">Send request</button>
+      </form>
+
+      <div class="modal-success" id="modalSuccess" style="display:none;">
+        <h2 class="modal-success-title">Request received.</h2>
+        <p class="modal-success-body">
+          Thanks, <span id="ms-name"></span>. We'll review your request and reach out at <span id="ms-email"></span> if there's a good fit.<br><br>
+          You can expect to hear back within 2 business days.
+        </p>
+        <button type="button" class="modal-back" onclick="closeApplyModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var industryCopy = {
+      'dexs': 'Settle every trade behind zkSTARK proofs that stay valid even after quantum computers arrive.',
+      'custodians': 'Prove custody and withdrawal integrity with proofs your auditors and regulators can verify independently.',
+      'market-makers': 'Quote and settle at high frequency on a proving engine with no hidden trust assumptions to price around.',
+      'l2s': 'Anchor your rollup\'s settlement layer to zkSTARK proofs that don\'t rely on elliptic-curve cryptography.',
+      'institutions': 'Meet compliance and audit requirements with a fully open-source, independently verifiable proving engine.'
+    };
+
+    var industryIcons = {
+      'dexs': '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="16" r="8"/><circle cx="20" cy="16" r="8"/><circle cx="16" cy="16" r="1" fill="currentColor" stroke="none"/></svg>',
+      'custodians': '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l11 6v14l-11 6-11-6V9l11-6z"/><path d="M16 9.5l6.2 3.4v6.2L16 22.5l-6.2-3.4v-6.2L16 9.5z"/><circle cx="16" cy="16" r="1" fill="currentColor" stroke="none"/></svg>',
+      'market-makers': '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 23l6-11 5 6 6-13 7 9"/><circle cx="10" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.1" fill="currentColor" stroke="none"/><circle cx="21" cy="5" r="1.1" fill="currentColor" stroke="none"/><circle cx="28" cy="14" r="1.1" fill="currentColor" stroke="none"/></svg>',
+      'l2s': '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="14" height="14"/><rect x="5.5" y="5.5" width="14" height="14" transform="rotate(-10 12.5 12.5)" opacity="0.55"/><rect x="12.5" y="12.5" width="14" height="14" transform="rotate(10 19.5 19.5)" opacity="0.55"/></svg>',
+      'institutions': '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 26h24"/><path d="M4 26V12L16 4l12 8v14"/><path d="M11 26V15"/><path d="M16 26V13"/><path d="M21 26V15"/></svg>'
+    };
+
+    var industryTabs = document.querySelectorAll('.tab');
+    var industryText = document.getElementById('industryText');
+    var industryIcon = document.getElementById('industryIcon');
+
+    industryTabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        industryTabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        industryText.style.opacity = '0';
+        industryIcon.style.opacity = '0';
+        setTimeout(function() {
+          var key = tab.dataset.industry;
+          industryText.textContent = industryCopy[key];
+          industryText.style.opacity = '1';
+          industryIcon.innerHTML = industryIcons[key];
+          industryIcon.style.opacity = '1';
+        }, 150);
+      });
+    });
+
+    var tickerValue = 7412558204;
+    var tickerEl = document.getElementById('tickerAmount');
+    setInterval(function() {
+      tickerValue += Math.floor(Math.random() * 650000) + 300000;
+      tickerEl.textContent = '$' + (tickerValue / 1e9).toFixed(3);
+    }, 1400);
+
+    var revealLines = document.querySelectorAll('.reveal-line');
+    var stepRows = document.querySelectorAll('.step-row');
+    var scrollTicking = false;
+
+    function updateScrollEffects() {
+      var vh = window.innerHeight;
+      var start = vh * 1.0;
+      var end = vh * 0.62;
+      revealLines.forEach(function(line) {
+        var rect = line.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var progress = (start - center) / (start - end);
+        progress = Math.max(0, Math.min(1, progress));
+        line.style.opacity = progress;
+        line.style.transform = 'translateY(' + ((1 - progress) * 18) + 'px)';
+        line.style.filter = 'blur(' + ((1 - progress) * 5) + 'px)';
+        line.style.letterSpacing = (0.02 + (1 - progress) * 0.12) + 'em';
+      });
+
+      var shapeLine = vh * 0.62;
+      stepRows.forEach(function(row) {
+        var rect = row.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var shape = document.querySelector('.shape-layer[data-shape="' + row.dataset.step + '"]');
+        if (!shape) return;
+        if (center < shapeLine) shape.classList.add('visible');
+        else shape.classList.remove('visible');
+      });
+
+      scrollTicking = false;
+    }
+
+    function onScrollEffects() {
+      if (!scrollTicking) {
+        requestAnimationFrame(updateScrollEffects);
+        scrollTicking = true;
+      }
+    }
+
+    if (revealLines.length || stepRows.length) {
+      updateScrollEffects();
+      window.addEventListener('scroll', onScrollEffects, { passive: true });
+      window.addEventListener('resize', onScrollEffects);
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    function openApplyModal(e) {
+      if (e) e.preventDefault();
+      document.getElementById('applyOverlay').classList.add('open');
+      document.getElementById('applyOverlay').setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeApplyModal() {
+      document.getElementById('applyOverlay').classList.remove('open');
+      document.getElementById('applyOverlay').setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.getElementById('applyOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeApplyModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeApplyModal();
+    });
+
+    var mPrefixSel   = document.getElementById('m-phone-prefix-sel');
+    var mPrefixLabel = document.getElementById('m-phone-prefix-label');
+    var mPhoneInput  = document.querySelector('.m-phone-number');
+
+    mPrefixSel.addEventListener('change', function() {
+      mPrefixLabel.textContent = mPrefixSel.value;
+      if (mPhoneInput.value) mPhoneInput.dispatchEvent(new Event('input'));
+    });
+
+    var mPhoneFormats = {
+      '+1':   function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 6)  return '(' + d.slice(0,3) + ') ' + d.slice(3);
+        return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10);
+      },
+      '+44':  function(d) {
+        if (d.length <= 4)  return d;
+        if (d.length <= 7)  return d.slice(0,4) + ' ' + d.slice(4);
+        return d.slice(0,4) + ' ' + d.slice(4,7) + ' ' + d.slice(7,11);
+      },
+      '+39':  function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 6)  return d.slice(0,3) + ' ' + d.slice(3);
+        return d.slice(0,3) + ' ' + d.slice(3,6) + ' ' + d.slice(6,10);
+      },
+      '+33':  function(d) {
+        var s = ''; for (var i=0;i<Math.min(d.length,10);i++) { if(i>0&&i%2===0) s+=' '; s+=d[i]; } return s;
+      },
+      '+49':  function(d) {
+        if (d.length <= 3)  return d;
+        if (d.length <= 7)  return d.slice(0,3) + ' ' + d.slice(3);
+        return d.slice(0,3) + ' ' + d.slice(3,7) + ' ' + d.slice(7,11);
+      },
+    };
+    var mDefaultFmt = function(d) {
+      var s = ''; for (var i=0;i<d.length;i++) { if(i>0&&i%3===0) s+=' '; s+=d[i]; } return s;
+    };
+
+    mPhoneInput.addEventListener('input', function() {
+      var digits = mPhoneInput.value.replace(/\D/g,'');
+      var code   = (mPrefixSel.value.match(/\+[\d]+/) || ['+1'])[0];
+      var fmt    = mPhoneFormats[code] || mDefaultFmt;
+      var cursor = mPhoneInput.selectionStart;
+      var old    = mPhoneInput.value;
+      mPhoneInput.value = fmt(digits);
+      var diff = mPhoneInput.value.length - old.length;
+      mPhoneInput.setSelectionRange(cursor + diff, cursor + diff);
+    });
+
+    var _supabase = supabase.createClient(
+      'https://huoukhwtckahbrqkdvjw.supabase.co',
+      'sb_publishable_6bG7RQr2Lr2STvmwhokfDQ_veCElBec'
+    );
+
+    document.getElementById('applyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name  = document.getElementById('m-name').value.trim();
+      var email = document.getElementById('m-email').value.trim();
+      var prefix = mPrefixSel.value;
+      var phoneDigits = mPhoneInput.value.trim();
+      var phone = phoneDigits ? (prefix + ' ' + phoneDigits) : '';
+      var company = document.getElementById('m-company').value.trim();
+      var role  = document.getElementById('m-role').value.trim();
+      var description = document.getElementById('m-description').value.trim();
+
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!name || !email || !emailOk || !company) {
+        var msg = !emailOk ? 'Please enter a valid email address.' : 'Please fill in all required fields.';
+        alert(msg);
+        return;
+      }
+
+      var submitBtn = document.querySelector('.modal-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      var details = 'Name: ' + name
+        + (phone ? '\nPhone: ' + phone : '')
+        + (role ? '\nRole: ' + role : '')
+        + (description ? '\nDetails: ' + description : '');
+
+      _supabase.from('QuantEx waitlist').insert({
+        email: email,
+        role: company,
+        volume: null,
+        venue: null,
+        care: details,
+        wants_airdrop: false,
+        wallet_address: null,
+      }).then(function(res) {
+        if (res.error) throw res.error;
+        document.getElementById('ms-name').textContent  = name.split(' ')[0];
+        document.getElementById('ms-email').textContent = email;
+        document.getElementById('applyForm').style.display = 'none';
+        document.querySelector('.modal-headline').style.display = 'none';
+        document.querySelector('.modal-sub').style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+      }).catch(function(err) {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send request';
+        alert('Something went wrong. Please try again.');
+      });
+    });
+  </script>
+
+  <script>
+    var blobs = document.querySelectorAll('.blob');
+
+    var speeds = [1400, 1800, 1100, 2000, 1500];
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function ri() { return Math.round(rand(15, 85)); }
+
+    function randomBR() {
+      return ri()+'% '+ri()+'% '+ri()+'% '+ri()+'% / '+ri()+'% '+ri()+'% '+ri()+'% '+ri()+'%';
+    }
+
+    function nextShape() {
+      var s = rand(0.7, 1.35);
+      return { sx: s, sy: s * rand(0.8, 1.2) };
+    }
+
+    function animateBlob(blob, i) {
+      var base = speeds[i % speeds.length];
+
+      function step() {
+        var sh  = nextShape();
+        var tx  = rand(-35, 35);
+        var ty  = rand(-35, 35);
+        var rot = rand(-90, 90);
+        var dur = base + rand(-base * 0.15, base * 0.15);
+        blob.style.transition   = 'transform '+dur+'ms cubic-bezier(0.37,0,0.63,1), border-radius '+dur+'ms cubic-bezier(0.37,0,0.63,1)';
+        blob.style.transform    = 'translate('+tx+'%, '+ty+'%) rotate('+rot+'deg) scaleX('+sh.sx+') scaleY('+sh.sy+')';
+        blob.style.borderRadius = randomBR();
+      }
+
+      blob.addEventListener('transitionend', function(e) {
+        if (e.propertyName === 'transform') step();
+      });
+
+      blob.style.borderRadius = randomBR();
+      setTimeout(step, rand(0, 1500));
+    }
+
+    blobs.forEach(function(b, i) { animateBlob(b, i); });
+  </script>
+
+  <script>
+  (async () => {
+    await document.fonts.load('400 64px "Stack Sans Headline"');
+    const sz = 64, c = document.createElement('canvas');
+    c.width = c.height = sz;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, sz, sz);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `400 48px "Stack Sans Headline"`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Q', sz / 2, sz / 2);
+    const link = document.createElement('link');
+    link.rel = 'icon'; link.type = 'image/png';
+    link.href = c.toDataURL('image/png');
+    document.head.appendChild(link);
+  })();
+  </script>
+
+</body>
+</html>
