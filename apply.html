@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Early Access - Quantex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,300;1,400&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Stack+Sans+Headline&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --qx-logo: 'Stack Sans Headline', 'Inter', sans-serif;
+      --qx-accent: #3B6EF6;
+      --qx-cream: #F4F2EE;
+      --qx-cream-2: #EDEAE3;
+      --qx-ink: #14140F;
+      --qx-black: #0A0A08;
+    }
+
+    body {
+      background: var(--qx-cream);
+      color: var(--qx-ink);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+
+    .serif-em {
+      font-family: 'IBM Plex Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .glass-word {
+      display: inline-block;
+      font-family: inherit;
+      font-weight: inherit;
+      background-size: 280% 280%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: glass-shift 5.5s ease-in-out infinite;
+    }
+    .glass-word.blue {
+      background-image:
+        radial-gradient(circle at 24% 26%, #B7D4FF 0%, transparent 66%),
+        radial-gradient(circle at 78% 18%, #3B6EF6 0%, transparent 62%),
+        radial-gradient(circle at 72% 78%, #7AA8FF 0%, transparent 64%),
+        radial-gradient(circle at 28% 76%, #1E45C2 0%, transparent 62%),
+        linear-gradient(135deg, #14297A, #0B1740);
+    }
+    @keyframes glass-shift {
+      0%, 100% { background-position: 0% 30%; }
+      50%      { background-position: 100% 70%; }
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 40px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--qx-ink);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(20,20,15,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--qx-ink); }
+
+    /* ── APPLY CARD ──────────────────────────────────── */
+    .apply-section {
+      display: flex;
+      justify-content: center;
+      padding: 20px 24px 100px;
+    }
+
+    .apply-card {
+      width: 100%;
+      max-width: 560px;
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.08);
+      border-radius: 22px;
+      box-shadow: 0 30px 70px rgba(20,20,15,0.08);
+      padding: 44px 40px 40px;
+    }
+
+    /* ── VISUAL BANNER (reuses blob card treatment) ────── */
+    .apply-visual {
+      position: relative;
+      aspect-ratio: 20/9;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      margin-bottom: 28px;
+    }
+
+    .blobs { position: absolute; inset: -25%; z-index: 0; }
+    .blob { position: absolute; filter: blur(38px); mix-blend-mode: screen; opacity: 0.9; will-change: transform, border-radius; }
+    .blob-1 { width: 55%; height: 55%; background: radial-gradient(circle, #1E45C2 0%, #0B1740 60%, transparent 100%); top: 20%; left: 10%; }
+    .blob-2 { width: 60%; height: 60%; background: radial-gradient(circle, #3B6EF6 0%, #15287A 55%, transparent 100%); top: 10%; right: 10%; }
+    .blob-3 { width: 50%; height: 50%; background: radial-gradient(circle, #7AA8FF 0%, #1E3A8A 55%, transparent 100%); bottom: 15%; right: 15%; }
+    .blob-4 { width: 48%; height: 48%; background: radial-gradient(circle, #8BBCFF 0%, #2451D6 55%, transparent 100%); top: 45%; left: 20%; }
+    .blob-5 { width: 45%; height: 45%; background: radial-gradient(circle, #5B8FFF 0%, #12205E 55%, transparent 100%); bottom: 20%; left: 5%; }
+
+    .glass { position: absolute; inset: 0; z-index: 1; backdrop-filter: blur(24px) saturate(1.5); -webkit-backdrop-filter: blur(24px) saturate(1.5); background: rgba(4,8,16,0.22); }
+
+    .apply-visual-content {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .apply-visual-mark {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .apply-head { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(20,20,15,0.08); }
+
+    .apply-head h1 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.7rem, 3vw, 2.1rem);
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .apply-head p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.55);
+      line-height: 1.6;
+    }
+
+    .a-field { margin-bottom: 20px; }
+
+    .a-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(20,20,15,0.45);
+      margin-bottom: 7px;
+    }
+
+    .a-field input[type="email"], .a-field input[type="text"], .a-field textarea {
+      width: 100%;
+      background: var(--qx-cream);
+      border: 1.5px solid rgba(20,20,15,0.12);
+      border-radius: 10px;
+      color: var(--qx-ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 400;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .a-field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .a-field input::placeholder, .a-field textarea::placeholder { color: rgba(20,20,15,0.32); }
+    .a-field input:focus, .a-field textarea:focus { border-color: var(--qx-accent); }
+
+    .a-error {
+      display: none;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #C43A2E;
+    }
+
+    .a-question { margin-bottom: 18px; }
+
+    .a-question-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--qx-ink);
+      margin-bottom: 10px;
+    }
+    .a-question-label span { font-weight: 400; color: rgba(20,20,15,0.4); }
+
+    .a-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .a-pill {
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(20,20,15,0.65);
+      background: var(--qx-cream);
+      border: 1px solid rgba(20,20,15,0.14);
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .a-pill:hover { border-color: rgba(20,20,15,0.3); }
+    .a-pill.selected {
+      color: #fff;
+      background: var(--qx-accent);
+      border-color: var(--qx-accent);
+    }
+
+    .a-airdrop {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(20,20,15,0.1);
+      background: var(--qx-cream);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+      margin-top: 8px;
+    }
+    .a-airdrop.on { border-color: rgba(59,110,246,0.4); background: rgba(59,110,246,0.06); }
+
+    .a-airdrop-box {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 2px solid rgba(20,20,15,0.2);
+      background: transparent;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .a-airdrop.on .a-airdrop-box { background: var(--qx-accent); border-color: var(--qx-accent); }
+    .a-airdrop-box svg { opacity: 0; transition: opacity 0.15s; }
+    .a-airdrop.on .a-airdrop-box svg { opacity: 1; }
+
+    .a-airdrop-copy { flex: 1; }
+    .a-airdrop-copy .t { font-size: 0.82rem; font-weight: 500; color: var(--qx-ink); }
+    .a-airdrop-copy .s { font-size: 0.72rem; color: rgba(20,20,15,0.45); margin-top: 2px; }
+
+    .a-wallet-row {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.3s ease;
+    }
+    .a-wallet-row input {
+      width: 100%;
+      margin-top: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--qx-ink);
+      padding: 11px 14px;
+      border-radius: 9px;
+      border: 1.5px solid rgba(59,110,246,0.35);
+      background: #fff;
+      outline: none;
+    }
+
+    .a-submit {
+      margin-top: 24px;
+      width: 100%;
+      padding: 14px 22px;
+      background: linear-gradient(135deg, var(--qx-accent), #15287A);
+      box-shadow: 0 16px 36px rgba(30,69,194,0.35);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .a-submit:hover { opacity: 0.88; }
+    .a-submit:disabled { opacity: 0.6; cursor: default; }
+
+    .a-foot-note {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(20,20,15,0.4);
+      font-weight: 400;
+    }
+
+    /* ── SUCCESS ─────────────────────────────────────── */
+    .a-success { display: none; text-align: center; padding: 8px 4px 4px; }
+
+    .a-success-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: var(--qx-accent);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .a-success h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+
+    .a-success p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.55);
+      line-height: 1.6;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    .a-success p span { color: var(--qx-ink); font-weight: 500; }
+
+    @media (max-width: 560px) {
+      .apply-card { padding: 32px 24px 30px; border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index-v4.html" class="nav-back">&larr;&nbsp; Back to site</a>
+    <a href="index-v4.html" class="nav-logo">Quantex</a>
+  </nav>
+
+  <!-- APPLY CARD -->
+  <section class="apply-section">
+    <div class="apply-card">
+
+      <div id="applyFormState">
+        <div class="apply-visual">
+          <div class="blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="blob blob-4"></div>
+            <div class="blob blob-5"></div>
+          </div>
+          <div class="glass"></div>
+          <div class="apply-visual-content">
+            <div class="apply-visual-mark">Quantex</div>
+          </div>
+        </div>
+        <div class="apply-head">
+          <h1>Apply for Quantex.</h1>
+          <p>We're onboarding our first traders and partners directly.</p>
+        </div>
+
+        <div class="a-field">
+          <label for="a-email">Email</label>
+          <input type="email" id="a-email" placeholder="you@fund.com" />
+          <div class="a-error" id="a-email-error"></div>
+        </div>
+
+        <div id="a-survey"></div>
+
+        <div class="a-field">
+          <label for="a-more">Anything else? (optional)</label>
+          <textarea id="a-more" placeholder="Tell us about any other features that matter most to you..."></textarea>
+        </div>
+
+        <div class="a-airdrop" id="a-airdrop-toggle">
+          <div class="a-airdrop-box">
+            <svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg>
+          </div>
+          <div class="a-airdrop-copy">
+            <div class="t">I would like to sign up for the Quantex airdrop</div>
+            <div class="s">Register your wallet to be included in the drop</div>
+          </div>
+        </div>
+        <div class="a-wallet-row" id="a-wallet-row">
+          <input type="text" id="a-wallet" placeholder="Enter your Ethereum wallet address" />
+        </div>
+        <div class="a-error" id="a-wallet-error"></div>
+
+        <button type="button" class="a-submit" id="a-submit">
+          Request early access
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+
+        <div class="a-foot-note">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          No spam. One email when access opens.
+        </div>
+      </div>
+
+      <div class="a-success" id="a-success">
+        <div class="a-success-icon">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2>You're on the list</h2>
+        <p>We'll reach <span id="a-success-email"></span> the moment Quantex opens.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    var _supabase = supabase.createClient(
+      'https://huoukhwtckahbrqkdvjw.supabase.co',
+      'sb_publishable_6bG7RQr2Lr2STvmwhokfDQ_veCElBec'
+    );
+
+    var questions = [
+      { id: 'role',   multi: true,  label: 'What kind of trader are you?', hint: '  ·  select all that apply', options: ['Retail trader', 'Active trader', 'Fund / desk', 'Market maker', 'Builder'] },
+      { id: 'volume', multi: false, label: 'Typical monthly volume?',       hint: '',                           options: ['< $10k', '$10k – $100k', '$100k – $1M', '$1M+'] },
+      { id: 'venue',  multi: true,  label: 'Where do you trade today?',     hint: '  ·  select all that apply', options: ['Perp DEX', 'CEX (Binance, OKX…)', 'Uniswap / AMM DEX', 'dYdX', 'Other'] },
+      { id: 'care',   multi: true,  label: 'What matters most to you?',     hint: '  ·  select all that apply', options: ['Quantum safety', 'True decentralization', 'Privacy', 'Low fees', 'Deep liquidity'] }
+    ];
+
+    var answers = {};
+
+    function renderSurvey() {
+      var panel = document.getElementById('a-survey');
+      panel.innerHTML = '';
+      questions.forEach(function(q) {
+        var qDiv = document.createElement('div');
+        qDiv.className = 'a-question';
+
+        var labelEl = document.createElement('div');
+        labelEl.className = 'a-question-label';
+        labelEl.innerHTML = q.label + (q.hint ? '<span>' + q.hint + '</span>' : '');
+        qDiv.appendChild(labelEl);
+
+        var optRow = document.createElement('div');
+        optRow.className = 'a-pills';
+
+        q.options.forEach(function(opt) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = opt;
+          btn.className = 'a-pill';
+
+          var isSelected = q.multi
+            ? Array.isArray(answers[q.id]) && answers[q.id].indexOf(opt) !== -1
+            : answers[q.id] === opt;
+          if (isSelected) btn.classList.add('selected');
+
+          btn.addEventListener('click', function() {
+            if (q.multi) {
+              var cur = Array.isArray(answers[q.id]) ? answers[q.id] : [];
+              answers[q.id] = cur.indexOf(opt) !== -1 ? cur.filter(function(x) { return x !== opt; }) : cur.concat([opt]);
+            } else {
+              answers[q.id] = opt;
+            }
+            renderSurvey();
+          });
+
+          optRow.appendChild(btn);
+        });
+
+        qDiv.appendChild(optRow);
+        panel.appendChild(qDiv);
+      });
+    }
+    renderSurvey();
+
+    var airdropOn = false;
+    var airdropToggle = document.getElementById('a-airdrop-toggle');
+    var walletRow = document.getElementById('a-wallet-row');
+    var walletInput = document.getElementById('a-wallet');
+    var walletError = document.getElementById('a-wallet-error');
+
+    airdropToggle.addEventListener('click', function() {
+      airdropOn = !airdropOn;
+      airdropToggle.classList.toggle('on', airdropOn);
+      if (airdropOn) {
+        walletRow.style.maxHeight = '60px';
+        walletRow.style.opacity = '1';
+      } else {
+        walletRow.style.maxHeight = '0';
+        walletRow.style.opacity = '0';
+        walletInput.value = '';
+        walletError.style.display = 'none';
+      }
+    });
+
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+    function validateWallet(addr) { return /^0x[0-9a-fA-F]{40}$/.test(addr.trim()); }
+
+    var emailInput = document.getElementById('a-email');
+    var emailError = document.getElementById('a-email-error');
+
+    emailInput.addEventListener('input', function() {
+      emailError.style.display = 'none';
+      emailInput.style.borderColor = 'rgba(20,20,15,0.12)';
+    });
+
+    var submitBtn = document.getElementById('a-submit');
+
+    submitBtn.addEventListener('click', function() {
+      var email = emailInput.value.trim();
+
+      if (!validateEmail(email)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        emailError.style.display = 'block';
+        emailInput.style.borderColor = '#C43A2E';
+        return;
+      }
+
+      if (airdropOn) {
+        var wallet = walletInput.value.trim();
+        if (!wallet || !validateWallet(wallet)) {
+          walletError.textContent = wallet ? 'Please enter a valid Ethereum address (0x…).' : 'Please enter your Ethereum wallet address to sign up for the airdrop.';
+          walletError.style.display = 'block';
+          walletInput.style.borderColor = '#C43A2E';
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      var careAnswer = Array.isArray(answers.care) ? answers.care.join(', ') : (answers.care || '');
+      var moreNotes   = document.getElementById('a-more').value.trim();
+      var care        = [careAnswer, moreNotes ? ('Notes: ' + moreNotes) : ''].filter(Boolean).join(' | ') || null;
+
+      _supabase.from('QuantEx waitlist').insert({
+        email: email,
+        role:           Array.isArray(answers.role)  ? answers.role.join(', ')  : (answers.role  || null),
+        volume:         answers.volume || null,
+        venue:          Array.isArray(answers.venue) ? answers.venue.join(', ') : (answers.venue || null),
+        care:           care,
+        wants_airdrop:  airdropOn,
+        wallet_address: airdropOn ? walletInput.value.trim() : null,
+      }).then(function(res) {
+        if (res.error) throw res.error;
+        document.getElementById('applyFormState').style.display = 'none';
+        document.getElementById('a-success').style.display = 'block';
+        document.getElementById('a-success-email').textContent = email;
+      }).catch(function(err) {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request early access';
+        emailError.textContent = 'Something went wrong. Please try again.';
+        emailError.style.display = 'block';
+      });
+    });
+  </script>
+
+  <script>
+    var blobs = document.querySelectorAll('.blob');
+
+    var speeds = [1400, 1800, 1100, 2000, 1500];
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function ri() { return Math.round(rand(15, 85)); }
+
+    function randomBR() {
+      return ri()+'% '+ri()+'% '+ri()+'% '+ri()+'% / '+ri()+'% '+ri()+'% '+ri()+'% '+ri()+'%';
+    }
+
+    function nextShape() {
+      var s = rand(0.7, 1.35);
+      return { sx: s, sy: s * rand(0.8, 1.2) };
+    }
+
+    function animateBlob(blob, i) {
+      var base = speeds[i % speeds.length];
+
+      function step() {
+        var sh  = nextShape();
+        var tx  = rand(-35, 35);
+        var ty  = rand(-35, 35);
+        var rot = rand(-90, 90);
+        var dur = base + rand(-base * 0.15, base * 0.15);
+        blob.style.transition   = 'transform '+dur+'ms cubic-bezier(0.37,0,0.63,1), border-radius '+dur+'ms cubic-bezier(0.37,0,0.63,1)';
+        blob.style.transform    = 'translate('+tx+'%, '+ty+'%) rotate('+rot+'deg) scaleX('+sh.sx+') scaleY('+sh.sy+')';
+        blob.style.borderRadius = randomBR();
+      }
+
+      blob.addEventListener('transitionend', function(e) {
+        if (e.propertyName === 'transform') step();
+      });
+
+      blob.style.borderRadius = randomBR();
+      setTimeout(step, rand(0, 1500));
+    }
+
+    blobs.forEach(function(b, i) { animateBlob(b, i); });
+  </script>
+
+  <script>
+  (async () => {
+    await document.fonts.load('400 64px "Stack Sans Headline"');
+    const sz = 64, c = document.createElement('canvas');
+    c.width = c.height = sz;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, sz, sz);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `400 48px "Stack Sans Headline"`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Q', sz / 2, sz / 2);
+    const link = document.createElement('link');
+    link.rel = 'icon'; link.type = 'image/png';
+    link.href = c.toDataURL('image/png');
+    document.head.appendChild(link);
+  })();
+  </script>
+
+</body>
+</html>
