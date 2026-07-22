@@ -617,13 +617,11 @@
     const sz = 64, c = document.createElement('canvas');
     c.width = c.height = sz;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, sz, sz);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `400 48px "Stack Sans Headline"`;
+    ctx.fillStyle = '#3B6EF6';
+    ctx.font = `400 62px "Stack Sans Headline"`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Q', sz / 2, sz / 2);
+    ctx.fillText('Q', sz / 2, sz / 2 + 2);
     const link = document.createElement('link');
     link.rel = 'icon'; link.type = 'image/png';
     link.href = c.toDataURL('image/png');
