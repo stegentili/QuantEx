@@ -96,6 +96,24 @@
     }
     .btn-blue:hover { opacity: 0.85; }
 
+    .btn-organic {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 22px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-organic:hover { opacity: 0.9; }
+    .btn-organic-label { position: relative; z-index: 2; }
+
     .btn-ghost {
       display: inline-flex;
       align-items: center;
@@ -848,11 +866,15 @@
       color: #fff;
       line-height: 1.05;
       letter-spacing: -0.03em;
-      font-size: clamp(4.5rem, 15vw, 10.5rem);
+      font-size: clamp(4.5rem, 23vw, 21rem);
       text-align: center;
       padding: 24px 0 20px;
       user-select: none;
       white-space: nowrap;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     @media (max-width: 860px) {
@@ -1083,7 +1105,17 @@
       </details>
     </div>
     <div class="faq-cta">
-      <a href="apply.html" class="btn-blue">Get Early Access</a>
+      <a href="apply.html" class="btn-organic">
+        <span class="blobs">
+          <span class="blob blob-1"></span>
+          <span class="blob blob-2"></span>
+          <span class="blob blob-3"></span>
+          <span class="blob blob-4"></span>
+          <span class="blob blob-5"></span>
+        </span>
+        <span class="glass"></span>
+        <span class="btn-organic-label">Get Early Access</span>
+      </a>
     </div>
   </section>
 
@@ -1092,9 +1124,6 @@
     <div class="footer-top">
       <div>
         <h3>Choose safety.<br />Choose Quantex.</h3>
-        <div class="footer-top-actions">
-          <a href="#technology" class="btn-outline-light">Explore the tech &nbsp;&rarr;</a>
-        </div>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Product</div>
@@ -1111,7 +1140,7 @@
     <div class="footer-wordmark">Quantex</div>
     <div class="footer-meta">
       <span>&#169; 2026 Quantex.</span>
-      <span class="footer-badge"><span>Its own L1 blockchain.</span><span>Powered by Starkom.</span></span>
+      <span class="footer-badge"><span>Running on its dedicated quantum-safe L1 blockchain.</span><span>Powered by Starkom.</span></span>
     </div>
   </footer>
 
