@@ -83,10 +83,11 @@
     }
     .btn-dark:hover { opacity: 0.82; }
 
-    .btn-blue {
+    .btn-gradient {
       display: inline-block;
       padding: 11px 22px;
-      background: var(--qx-accent);
+      background: linear-gradient(135deg, var(--qx-accent), #15287A);
+      box-shadow: 0 16px 36px rgba(30,69,194,0.35);
       color: #fff;
       font-size: 0.82rem;
       font-weight: 500;
@@ -94,25 +95,7 @@
       border-radius: 999px;
       transition: opacity 0.2s;
     }
-    .btn-blue:hover { opacity: 0.85; }
-
-    .btn-organic {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 22px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: #000;
-      color: #fff;
-      font-size: 0.82rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .btn-organic:hover { opacity: 0.9; }
-    .btn-organic-label { position: relative; z-index: 2; }
+    .btn-gradient:hover { opacity: 0.88; }
 
     .btn-ghost {
       display: inline-flex;
@@ -1105,17 +1088,7 @@
       </details>
     </div>
     <div class="faq-cta">
-      <a href="apply.html" class="btn-organic">
-        <span class="blobs">
-          <span class="blob blob-1"></span>
-          <span class="blob blob-2"></span>
-          <span class="blob blob-3"></span>
-          <span class="blob blob-4"></span>
-          <span class="blob blob-5"></span>
-        </span>
-        <span class="glass"></span>
-        <span class="btn-organic-label">Get Early Access</span>
-      </a>
+      <a href="apply.html" class="btn-gradient">Get Early Access</a>
     </div>
   </section>
 
