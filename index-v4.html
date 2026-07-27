@@ -83,6 +83,19 @@
     }
     .btn-dark:hover { opacity: 0.82; }
 
+    .btn-blue {
+      display: inline-block;
+      padding: 11px 22px;
+      background: var(--qx-accent);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: opacity 0.2s;
+    }
+    .btn-blue:hover { opacity: 0.85; }
+
     .btn-ghost {
       display: inline-flex;
       align-items: center;
@@ -270,8 +283,8 @@
 
     .threat-foot {
       text-align: center;
-      margin-top: 8px;
-      font-size: 0.72rem;
+      margin-top: 40px;
+      font-size: 0.82rem;
       color: rgba(255,255,255,0.32);
     }
     .threat-foot a {
@@ -681,6 +694,94 @@
       border-radius: 999px;
     }
 
+    /* ── FAQ SECTION ─────────────────────────────────────── */
+    .faq-section { padding: 0 40px 120px; }
+
+    .faq-head {
+      max-width: 700px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .faq-head h2 {
+      font-family: var(--qx-logo);
+      font-weight: 400;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .faq-head p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.6);
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border: 1px solid rgba(20,20,15,0.08);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::marker { content: ''; }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(20,20,15,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(20,20,15,0.55);
+      transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .faq-item[open] .faq-icon {
+      transform: rotate(45deg);
+      background: var(--qx-accent);
+      color: #fff;
+      border-color: var(--qx-accent);
+    }
+
+    .faq-answer {
+      padding: 0 24px 22px;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(20,20,15,0.6);
+      line-height: 1.6;
+      max-width: 640px;
+    }
+
+    .faq-cta { text-align: center; margin-top: 40px; }
+
     /* ── FOOTER ──────────────────────────────────────────── */
     .footer {
       background: var(--qx-black);
@@ -838,7 +939,7 @@
           <p>Any open order on any account wiped instantly - strategies disrupted, markets manipulated.</p>
         </div>
       </div>
-      <div class="threat-foot">*Q-day: the day a Cryptographically Relevant Quantum Processor (CRQP) becomes available. Google has set 2029 as its own deadline to finish migrating to quantum-safe cryptography - <a href="https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/" target="_blank" rel="noopener">read Google's migration timeline</a>.</div>
+      <div class="threat-foot">*Q-day: the day a Cryptographically Relevant Quantum Processor (CRQP) becomes available. <br >Google has set 2029 as its own deadline to finish migrating to quantum-safe cryptography - <a href="https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/" target="_blank" rel="noopener">read Google's migration timeline</a>.</div>
     </div>
   </section>
 
@@ -846,7 +947,7 @@
   <section class="features-section" id="features">
     <div class="features-head">
       <div class="section-eyebrow">Features</div>
-      <h2>Your liquidity.<br />Military-grade secured.</h2>
+      <h2>Your liquidity.<br />Secured by military-grade cryptography</h2>
       <p>
         Quantex runs on our quantum-safe L1 blockchain Libernet, with cutting-edge cryptography powered by Starkom, our open-source zkSTARK engine. Auditable by anyone, verifiable on-chain, and built to outlast the quantum
         threat timeline.
@@ -937,6 +1038,52 @@
         </div>
       </div>
       <a href="apply.html" class="btn-light">Get Early Access</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="faq-head">
+      <div class="section-eyebrow">FAQ</div>
+      <h2>Questions, answered.</h2>
+      <p>The key concepts behind Quantex, explained simply.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What does "quantum-safe" actually mean for me?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">Most wallets today are protected by cryptography that a powerful enough quantum computer will eventually be able to break. Quantex uses zkSTARK proofs instead of that older elliptic-curve cryptography, so your funds and trades stay secure even after quantum computers arrive.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is Q-day, and should I worry about it right now?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">Q-day is the day a quantum computer becomes powerful enough to break the encryption most crypto wallets rely on today. Google has set 2029 as its own deadline to be fully migrated. You don't need to panic today, but any funds secured with old-style cryptography will be exposed once it arrives - Quantex is built to be safe before and after that date.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What's a zkSTARK proof, in plain English?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">It's a way to prove that a trade or transaction is valid without revealing the private details behind it, using math that quantum computers can't break. Think of it as a tamper-proof receipt - anyone can check it's real, but no one can forge it or read what's inside.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is Libernet, and how does it relate to Quantex?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">Libernet is the quantum-safe Layer-1 blockchain that Quantex is built on. Every trade you place is ultimately matched and settled there, secured end to end by Starkom, our open-source zkSTARK engine.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How does the dark pool keep my large orders private?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">When you route an order through the dark pool, its size, direction, and your wallet address stay hidden behind a zkSTARK proof - only the execution price is ever public. That means you can move size without tipping off the market or getting front-run.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does Quantex ever hold my funds?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">No. Quantex is non-custodial, so your assets stay in your own wallet at all times. Every trade is matched on our order book and settled on-chain, where anyone can verify it happened correctly.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I get charged for cancelling an order?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">No, cancellations are always free. You can place and cancel orders as fast as your strategy needs without paying a fee just to change your mind.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I start using Quantex?<span class="faq-icon">&#43;</span></summary>
+        <div class="faq-answer">Quantex is currently in early access. Tap "Get Early Access" below, apply, and we'll reach out as new spots open up.</div>
+      </details>
+    </div>
+    <div class="faq-cta">
+      <a href="apply.html" class="btn-blue">Get Early Access</a>
     </div>
   </section>
 
