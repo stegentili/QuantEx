@@ -490,7 +490,6 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin-bottom: 36px;
     }
 
     .spec-card {
@@ -535,27 +534,6 @@
       line-height: 1.55;
     }
 
-    .specs-pills {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .spec-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.74rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.75);
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      padding: 8px 16px 8px 14px;
-      border-radius: 999px;
-    }
-
-    .spec-pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--qx-accent); flex-shrink: 0; }
 
     @media (max-width: 860px) {
       .specs-grid { grid-template-columns: 1fr 1fr; }
@@ -565,22 +543,7 @@
     }
 
     /* ── "BRING A PROBLEM" PANEL ────────────────────────── */
-    .problem-section { padding: 0 40px 120px; }
-
-    .problem-inner {
-      max-width: 700px;
-      margin: 0 auto 40px;
-      text-align: center;
-    }
-
-    .problem-inner h2 {
-      font-family: var(--qx-logo);
-      font-weight: 400;
-      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-    }
+    .problem-section { padding: 90px 40px 120px; }
 
     .problem-eyebrow {
       display: block;
@@ -602,14 +565,6 @@
       margin-bottom: 14px;
     }
     .section-eyebrow.red { color: #E5484D; }
-
-    .problem-inner p {
-      font-size: 0.92rem;
-      font-weight: 300;
-      color: rgba(20,20,15,0.6);
-      line-height: 1.6;
-      margin: 0 auto;
-    }
 
     .problem-panel {
       max-width: 1240px;
@@ -727,8 +682,8 @@
     }
 
     @media (max-width: 860px) {
-      .problem-inner { grid-template-columns: 1fr; }
-      .problem-panel { gap: 24px; padding: 48px 24px 40px; }
+      .problem-section { padding: 64px 24px 80px; }
+      .problem-panel { gap: 24px; padding: 40px 24px; }
       .problem-panel-pills { flex-direction: column; gap: 18px; }
       .problem-connector { flex-direction: column; }
     }
@@ -984,6 +939,7 @@
       <div class="nav-links">
         <a href="#technology">Industry Threat</a>
         <a href="#features">Features</a>
+        <a href="#specs">Tech Stack</a>
       </div>
     </div>
   </nav>
@@ -1114,9 +1070,9 @@
   <section class="specs-section" id="specs">
     <div class="specs-inner">
       <div class="specs-head">
-        <div class="section-eyebrow">The Stack</div>
-        <h2>Built different, from the silicon up.</h2>
-        <p>Consensus, cryptography, matching, and settlement - every layer was rebuilt from scratch for a post-quantum world. Here's what that looks like under the hood.</p>
+        <div class="section-eyebrow">Tech Stack</div>
+        <h2>Technological superiority.<br>From the protocol layer up.</h2>
+        <p>Consensus, cryptography, matching, and settlement - rebuilt from scratch, layer by layer, for a post-quantum world.</p>
       </div>
       <div class="specs-grid">
         <div class="spec-card">
@@ -1150,29 +1106,11 @@
           <div class="spec-desc">Cancel and requote as fast as your strategy demands, with zero cost built into the protocol.</div>
         </div>
       </div>
-      <div class="specs-pills">
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Quantum-resistant cryptography</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Non-custodial by design</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Open-source &amp; auditable</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Verifiable on-chain settlement</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>No trusted setup</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>MEV-resistant dark pool</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Zero elliptic-curve dependencies</span>
-        <span class="spec-pill"><span class="spec-pill-dot"></span>Sub-second block times</span>
-      </div>
     </div>
   </section>
 
   <!-- BRING A PROBLEM PANEL -->
   <section class="problem-section">
-    <div class="problem-inner">
-      <h2>For those that value safety <br />& cutting-edge technology.</h2>
-      <div>
-        <p>
-          Price discovery on our own book. Private execution for size. Every trade settled behind quantum-safe proofs.
-        </p>
-      </div>
-    </div>
     <div class="problem-panel">
       <div class="blobs">
         <div class="blob blob-1"></div>
@@ -1182,7 +1120,7 @@
         <div class="blob blob-5"></div>
       </div>
       <div class="glass"></div>
-      <h3 class="problem-panel-heading">The future of trading is quantum-safe.</h3>
+      <h3 class="problem-panel-heading">The future of trading. <br /> Quantum-safe.</h3>
       <div class="problem-panel-pills">
         <div class="problem-msg">
           &ldquo;I want the price I was quoted - and a guarantee that outlives the next computer built to break it.&rdquo;
